@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BubbleBook - Welcome</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Inter (with bold weight) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -37,7 +35,12 @@
 <body>
 
     <div class="video-background-container">
-        <video id="background-video" autoplay loop muted playsinline src="https://youtu.be/wfLlNmAsglc"></video>
+        <iframe id="background-video"
+                src="https://www.youtube.com/embed/wfLlNmAsglc?autoplay=1&mute=1&loop=1&playlist=wfLlNmAsglc&controls=0&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3"
+                frameborder="0"
+                allow="autoplay; encrypted-media"
+                allowfullscreen>
+        </iframe>
     </div>
     <div class="video-overlay"></div>
 
@@ -76,7 +79,7 @@
             <div class="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="text-center md:text-left">
                     <div class="flex items-baseline cursor-pointer justify-center md:justify-start"><span class="font-black text-3xl leading-none">B</span><span class="font-semibold text-base">ubblebook</span></div>
-                    <p class="text-pink-200 text-sm mt-2">&copy; 2025 BubbleBook. All rights reserved.</p>
+                    <p class="text-pink-200 text-sm mt-2">© 2025 BubbleBook. All rights reserved.</p>
                 </div>
                 <div class="text-center md:text-right">
                     <div class="flex items-center justify-center md:justify-end gap-2">
@@ -98,32 +101,28 @@
                     <h2 class="text-3xl font-bold text-gray-800">Be the First to Pop In!</h2>
                     <p class="mt-4 text-gray-600">Join our waitlist to get exclusive early access.</p>
                     <form id="waitlist-form" class="mt-6 flex flex-col gap-4">
-                        <!-- Step 1: Email -->
                         <div id="step-1">
-                             <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div><input id="email-input" type="email" placeholder="Enter your email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your email"></div>
+                               <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div><input id="email-input" type="email" placeholder="Enter your email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your email"></div>
                             <button type="button" id="next-to-step-2" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
                         </div>
-                         <!-- Step 2: Age Verification -->
-                        <div id="step-2" class="hidden">
-                             <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div><input id="dob-input" type="text" placeholder="MM/DD/YYYY" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your date of birth"></div>
+                            <div id="step-2" class="hidden">
+                               <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div><input id="dob-input" type="text" placeholder="MM/DD/YYYY" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your date of birth"></div>
                             <button type="button" id="next-to-step-3" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
                         </div>
-                        <!-- Step 3: Phone Number -->
                         <div id="step-3" class="hidden">
                             <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">+1</span><input id="phone-input" type="tel" placeholder="(555) 123-4567" required class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your phone number"></div>
                             <button type="button" id="next-to-step-4" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
                         </div>
-                        <!-- Step 4: Verification -->
                         <div id="step-4" class="hidden">
-                             <div id="hold-container"><div id="hold-progress"></div><span id="hold-text">Hold to Verify</span></div>
+                               <div id="hold-container"><div id="hold-progress"></div><span id="hold-text">Hold to Verify</span></div>
                             <button type="submit" id="waitlist-submit-btn" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>Join the Waitlist</button>
                         </div>
                         <div id="error-message" class="text-red-500 text-sm h-4 mt-1"></div>
                     </form>
                 </div>
                 <div id="success-message" class="hidden">
-                     <h2 class="text-3xl font-bold text-gray-800">🎉 Thanks!</h2>
-                     <p class="mt-4 text-gray-600">Thanks for joining the Bubble Book waitlist! We'll notify you soon.</p>
+                            <h2 class="text-3xl font-bold text-gray-800">🎉 Thanks!</h2>
+                            <p class="mt-4 text-gray-600">Thanks for joining the Bubble Book waitlist! We'll notify you soon.</p>
                 </div>
             </div>
         </div>
