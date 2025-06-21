@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About BubbleBook</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter (with bold weight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Applying the Inter font and setting up for a sticky footer */
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      .page-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      main {
+        flex-grow: 1;
+      }
+
+      header,
+      footer {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bubbles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .bubble {
+        position: absolute;
+        bottom: -150px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float-up 25s infinite;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Bubbles for modal (pink) */
+      .modal-bubble {
+        position: absolute;
+        bottom: -150px;
+        background-color: rgba(236, 72, 153, 0.15); /* Light pink color */
+        border-radius: 50%;
+        animation: float-up 20s infinite;
+        box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+      }
+
+      @keyframes float-up {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        99% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-150vh);
+          opacity: 0;
+        }
+      }
+
+      /* Styles for the slideshow */
+      .slide {
+        transition: opacity 0.5s ease-in-out;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Page Wrapper for Content -->
+    <div class="page-wrapper">
+      <!-- Header Section -->
+      <header
+        class="bg-pink-500/80 backdrop-blur-sm text-white p-4 sticky top-0 z-40"
+      >
+        <div class="bubbles-container" id="header-bubble-container"></div>
+        <div class="relative z-10 max-w-7xl mx-auto">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-baseline cursor-pointer">
+              <span class="font-black text-4xl leading-none">B</span>
+              <span class="font-semibold text-lg">ubblebook</span>
+            </a>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-2">
+              <a
+                href=".\About.html"
+                class="px-3 py-2 bg-pink-600/50 rounded-md transition-colors"
+                >About</a
+              >
+              <a
+                href=".\Demo.html"
+                class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors"
+                >Demo</a
+              >
+              <a
+                href="#"
+                class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors"
+                >Languages</a
+              >
+              <a
+                href="#"
+                id="signup-btn"
+                class="px-3 py-2 bg-white text-pink-500 font-bold rounded-md hover:bg-gray-200 transition-colors"
+                >Sign Up</a
+              >
+            </nav>
+            <!-- Hamburger Button -->
+            <button
+              id="hamburger-btn"
+              class="md:hidden p-2 rounded-md hover:bg-pink-600/50"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="hidden md:hidden mt-2">
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm bg-pink-600/50 rounded-md"
+              >About</a
+            >
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md"
+              >Download</a
+            >
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md"
+              >Languages</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content for About Page -->
+      <main class="w-full">
+        <!-- Hero Section -->
+        <div class="bg-white">
+          <div
+            class="max-w-7xl mx-auto py-16 px-4 sm:py-24 sm:px-6 lg:px-8 text-center"
+          >
+            <h1
+              class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+            >
+              Meet Your Next Connection
+            </h1>
+            <p class="mt-6 max-w-2xl mx-auto text-xl text-gray-500">
+              In a world full of noise, finding genuine connections can be
+              tough. That's why we built BubbleBook—to help you cut through the
+              static and find the people you're actually looking for.
+            </p>
+          </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="py-12 bg-gray-50">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center">
+              <h2
+                class="text-base text-pink-600 font-semibold tracking-wide uppercase"
+              >
+                Our Mission
+              </h2>
+              <p
+                class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl"
+              >
+                Connecting You, Intelligently
+              </p>
+              <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                Whether it's a co-founder for your next big idea, a new friend
+                who shares your passions, or that special someone, our AI is
+                designed to bring you closer.
+              </p>
+            </div>
+
+            <div class="mt-10">
+              <dl
+                class="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10"
+              >
+                <div class="relative">
+                  <dt>
+                    <div
+                      class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white"
+                    >
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l4 4m0 0l4 4m-4-4v12m-4-4h12m-4 4l-4 4m0 0l-4-4m4 4V7"
+                        />
+                      </svg>
+                    </div>
+                    <p
+                      class="ml-16 text-lg leading-6 font-medium text-gray-900"
+                    >
+                      AI-Powered Matching
+                    </p>
+                  </dt>
+                  <dd class="mt-2 ml-16 text-base text-gray-500">
+                    Our smart algorithm goes beyond surface-level traits. It
+                    learns what you're looking for to suggest highly compatible
+                    matches for friendship, dating, or business.
+                  </dd>
+                </div>
+
+                <div class="relative">
+                  <dt>
+                    <div
+                      class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white"
+                    >
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                    </div>
+                    <p
+                      class="ml-16 text-lg leading-6 font-medium text-gray-900"
+                    >
+                      Location-Based Discovery
+                    </p>
+                  </dt>
+                  <dd class="mt-2 ml-16 text-base text-gray-500">
+                    "Pop In" to local spots like cafes or co-working spaces.
+                    BubbleBook shows you who's there and open to connecting,
+                    turning missed opportunities into real-life meetups.
+                  </dd>
+                </div>
+
+                <div class="relative">
+                  <dt>
+                    <div
+                      class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white"
+                    >
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 009-9m-9 9a9 9 0 00-9-9"
+                        />
+                      </svg>
+                    </div>
+                    <p
+                      class="ml-16 text-lg leading-6 font-medium text-gray-900"
+                    >
+                      One App, All Connections
+                    </p>
+                  </dt>
+                  <dd class="mt-2 ml-16 text-base text-gray-500">
+                    Why juggle multiple apps? Seamlessly switch between modes to
+                    find a friend for a concert, a date for Friday night, or a
+                    partner for your next venture.
+                  </dd>
+                </div>
+
+                <div class="relative">
+                  <dt>
+                    <div
+                      class="absolute flex items-center justify-center h-12 w-12 rounded-md bg-pink-500 text-white"
+                    >
+                      <svg
+                        class="h-6 w-6"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                        />
+                      </svg>
+                    </div>
+                    <p
+                      class="ml-16 text-lg leading-6 font-medium text-gray-900"
+                    >
+                      Privacy First
+                    </p>
+                  </dt>
+                  <dd class="mt-2 ml-16 text-base text-gray-500">
+                    Your privacy is paramount. You control who sees you and
+                    when. Go invisible anytime, and connect only when you're
+                    comfortable and ready.
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subscription Tiers Section -->
+        <div class="bg-white py-12">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+              <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                Subscription Tiers
+              </h2>
+              <p class="mt-4 text-xl text-gray-500">
+                Upgrade to Plus, Gold, or Platinum for an enhanced BubbleBook
+                experience.
+              </p>
+            </div>
+            <div class="mt-10 grid grid-cols-1 gap-8 lg:grid-cols-3">
+              <!-- Plus Tier -->
+              <div
+                class="bg-gray-50 rounded-lg shadow-lg p-8 flex flex-col text-center"
+              >
+                <h3 class="text-2xl font-bold text-pink-500">
+                  BubbleBook Plus
+                </h3>
+                <div class="my-4">
+                  <span class="text-4xl font-extrabold text-gray-900">$20</span>
+                  <span class="text-base font-medium text-gray-500"
+                    >/month</span
+                  >
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow text-left">
+                  <li class="flex items-start">
+                    <span class="text-pink-500 mr-2 mt-1">&#10003;</span>
+                    Unlimited Connections
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-pink-500 mr-2 mt-1">&#10003;</span>
+                    Unlimited "Pop Ins"
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-pink-500 mr-2 mt-1">&#10003;</span> See
+                    who visited your profile
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-pink-500 mr-2 mt-1">&#10003;</span> Hide
+                    Advertisements
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-pink-500 mr-2 mt-1">&#10003;</span> Go
+                    Incognito
+                  </li>
+                </ul>
+              </div>
+              <!-- Gold Tier -->
+              <div
+                class="bg-gray-50 rounded-lg shadow-lg p-8 flex flex-col border-2 border-yellow-400 text-center"
+              >
+                <h3 class="text-2xl font-bold text-yellow-500">
+                  BubbleBook Gold
+                </h3>
+                <div class="my-4">
+                  <span class="text-4xl font-extrabold text-gray-900">$30</span>
+                  <span class="text-base font-medium text-gray-500"
+                    >/month</span
+                  >
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow text-left">
+                  <li class="flex items-start">
+                    <span class="text-yellow-500 mr-2 mt-1">&#10003;</span> See
+                    Who Likes You
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-yellow-500 mr-2 mt-1">&#10003;</span> New
+                    Top Picks every day
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-yellow-500 mr-2 mt-1">&#10003;</span>
+                    Weekly Super Likes
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-yellow-500 mr-2 mt-1">&#10003;</span> 1
+                    Free Boost a month
+                  </li>
+                  <li class="mt-6 font-semibold">
+                    And everything you love from Plus!
+                  </li>
+                </ul>
+              </div>
+              <!-- Platinum Tier -->
+              <div
+                class="bg-gray-50 rounded-lg shadow-lg p-8 flex flex-col text-center"
+              >
+                <h3 class="text-2xl font-bold text-gray-700">
+                  BubbleBook Platinum
+                </h3>
+                <div class="my-4">
+                  <span class="text-4xl font-extrabold text-gray-900">$40</span>
+                  <span class="text-base font-medium text-gray-500"
+                    >/month</span
+                  >
+                </div>
+                <ul class="space-y-4 text-gray-600 flex-grow text-left">
+                  <li class="flex items-start">
+                    <span class="text-gray-700 mr-2 mt-1">&#10003;</span>
+                    Message before Matching
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-gray-700 mr-2 mt-1">&#10003;</span>
+                    Prioritized Connections
+                  </li>
+                  <li class="flex items-start">
+                    <span class="text-gray-700 mr-2 mt-1">&#10003;</span> See
+                    the Likes you've sent in the last 7 days
+                  </li>
+                  <li class="mt-6 font-semibold">
+                    And everything you love from Gold!
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Premium Features Slideshow Section -->
+        <div class="bg-white py-12">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+              <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+                Unlock Your Full Potential
+              </h2>
+              <p class="mt-4 text-xl text-gray-500">
+                Go premium to access exclusive features and supercharge your
+                networking.
+              </p>
+            </div>
+
+            <div
+              id="slideshow-container"
+              class="mt-10 relative max-w-3xl mx-auto"
+            >
+              <!-- Slides -->
+              <div class="slide relative">
+                <img
+                  src="https://placehold.co/1200x600/ec4899/ffffff?text=Advanced+AI+Filters"
+                  class="w-full rounded-lg shadow-2xl"
+                />
+                <div
+                  class="absolute bottom-0 left-0 bg-black/50 text-white p-4 rounded-b-lg w-full"
+                >
+                  <h3 class="text-xl font-bold">Advanced AI Filters</h3>
+                  <p class="text-sm">
+                    Fine-tune your search with premium filters for interests,
+                    industry, and goals.
+                  </p>
+                </div>
+              </div>
+              <div class="slide relative hidden">
+                <img
+                  src="https://placehold.co/1200x600/8b5cf6/ffffff?text=Unlimited+'Pop+Ins'"
+                  class="w-full rounded-lg shadow-2xl"
+                />
+                <div
+                  class="absolute bottom-0 left-0 bg-black/50 text-white p-4 rounded-b-lg w-full"
+                >
+                  <h3 class="text-xl font-bold">Unlimited 'Pop Ins'</h3>
+                  <p class="text-sm">
+                    Check in to as many locations as you want and maximize your
+                    discovery potential.
+                  </p>
+                </div>
+              </div>
+              <div class="slide relative hidden">
+                <img
+                  src="https://placehold.co/1200x600/3b82f6/ffffff?text=See+Who+Likes+You"
+                  class="w-full rounded-lg shadow-2xl"
+                />
+                <div
+                  class="absolute bottom-0 left-0 bg-black/50 text-white p-4 rounded-b-lg w-full"
+                >
+                  <h3 class="text-xl font-bold">See Who Likes You</h3>
+                  <p class="text-sm">
+                    Get a list of everyone who's shown interest in you and
+                    connect instantly.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Prev/Next Buttons -->
+              <button
+                id="prev-btn"
+                class="absolute top-1/2 left-0 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full shadow-md ml-4"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-800"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"
+                  ></path>
+                </svg>
+              </button>
+              <button
+                id="next-btn"
+                class="absolute top-1/2 right-0 -translate-y-1/2 bg-white/50 hover:bg-white p-2 rounded-full shadow-md mr-4"
+              >
+                <svg
+                  class="w-6 h-6 text-gray-800"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="bg-gray-50">
+          <div
+            class="max-w-4xl mx-auto text-center py-16 px-4 sm:py-20 sm:px-6 lg:px-8"
+          >
+            <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+              <span class="block">Ready to stop swiping?</span>
+              <span class="block text-pink-600">Start connecting.</span>
+            </h2>
+            <button
+              id="get-started-btn-about"
+              class="mt-8 w-full inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-pink-500 hover:bg-pink-600 sm:w-auto"
+            >
+              Join the Waitlist
+            </button>
+          </div>
+        </div>
+      </main>
+
+      <!-- Footer Section -->
+      <footer class="bg-pink-500/80 backdrop-blur-sm text-white py-4">
+        <div class="bubbles-container" id="footer-bubble-container"></div>
+        <div
+          class="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <div class="text-center md:text-left">
+            <div
+              class="flex items-baseline cursor-pointer justify-center md:justify-start"
+            >
+              <span class="font-black text-3xl leading-none">B</span>
+              <span class="font-semibold text-base">ubblebook</span>
+            </div>
+            <p class="text-pink-200 text-sm mt-2">
+              &copy; 2025 BubbleBook. All rights reserved.
+            </p>
+          </div>
+          <div class="text-center md:text-right">
+            <div class="flex items-center justify-center md:justify-end gap-2">
+              <a
+                href="#"
+                id="app-store-btn"
+                aria-label="Download on the App Store"
+              >
+                <img
+                  src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                  alt="Download on the App Store"
+                  class="h-10"
+                />
+              </a>
+              <a
+                href="#"
+                id="google-play-btn"
+                aria-label="Get it on Google Play"
+              >
+                <img
+                  src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                  alt="Get it on Google Play"
+                  class="h-14"
+                />
+              </a>
+            </div>
+            <p class="text-[10px] text-pink-300 mt-2 leading-tight">
+              Apple and the Apple logo are trademarks of Apple Inc. Google Play
+              is a trademark of Google LLC.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Pop-up Modal HTML -->
+    <div
+      id="info-modal"
+      class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ease-in-out"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform transition-all duration-300 ease-in-out scale-95 overflow-hidden"
+        id="modal-panel"
+        data-initialized="false"
+      >
+        <!-- Modal Bubble Container -->
+        <div class="bubbles-container" id="modal-bubble-container"></div>
+
+        <!-- Modal Content (wrapped for z-index) -->
+        <div class="relative z-10 text-center">
+          <!-- Close Button -->
+          <button
+            id="close-modal-btn"
+            class="absolute -top-4 -right-4 text-gray-400 hover:text-gray-700"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+
+          <div id="waitlist-content">
+            <!-- Headline -->
+            <h2 class="text-3xl font-bold text-gray-800">
+              Be the First to Pop In!
+            </h2>
+
+            <!-- Explanation -->
+            <p class="mt-4 text-gray-600">
+              Join our waitlist to get exclusive early access and start making
+              meaningful connections.
+            </p>
+
+            <!-- Waitlist Form -->
+            <form id="waitlist-form" class="mt-6 flex flex-col gap-4">
+              <input
+                id="email-input"
+                type="email"
+                placeholder="Enter your email"
+                required
+                class="w-full px-4 py-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition"
+                aria-label="Enter your email"
+              />
+
+              <label
+                class="flex items-center justify-center text-sm text-gray-600 cursor-pointer"
+              >
+                <input
+                  id="robot-check"
+                  type="checkbox"
+                  class="h-4 w-4 rounded border-gray-300 text-pink-500 focus:ring-pink-400"
+                  required
+                />
+                <span class="ml-2">I'm not a robot</span>
+              </label>
+
+              <button
+                type="submit"
+                class="w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600 transition-all transform hover:scale-105"
+              >
+                Join the Waitlist
+              </button>
+            </form>
+          </div>
+
+          <!-- Success Message (Initially Hidden) -->
+          <div id="success-message" class="hidden">
+            <h2 class="text-3xl font-bold text-gray-800">🎉 Thanks!</h2>
+            <p class="mt-4 text-gray-600">
+              Thanks for joining the Bubble Book waitlist! We'll notify you
+              soon.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        /**
+         * Reusable function to create animated bubbles for header/footer.
+         */
+        function createPageBubbles(containerId) {
+          const bubbleContainer = document.getElementById(containerId);
+          if (!bubbleContainer) return;
+          const numberOfBubbles = 40;
+          for (let i = 0; i < numberOfBubbles; i++) {
+            const bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+            const size = Math.random() * 40 + 10;
+            const leftPosition = Math.random() * 100;
+            const animationDuration = Math.random() * 3 + 1;
+            const animationDelay = Math.random() * 2;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${leftPosition}%`;
+            bubble.style.animationDuration = `${animationDuration}s`;
+            bubble.style.animationDelay = `${animationDelay}s`;
+            bubbleContainer.appendChild(bubble);
+          }
+        }
+
+        /**
+         * Function to create animated bubbles specifically for the modal.
+         */
+        function createModalBubbles() {
+          const bubbleContainer = document.getElementById(
+            "modal-bubble-container"
+          );
+          if (!bubbleContainer) return;
+          const numberOfBubbles = 25;
+          for (let i = 0; i < numberOfBubbles; i++) {
+            const bubble = document.createElement("div");
+            bubble.classList.add("modal-bubble"); // Use the pink bubble style
+            const size = Math.random() * 60 + 20; // Slightly larger bubbles in modal
+            const leftPosition = Math.random() * 100;
+            const animationDuration = Math.random() * 8 + 6; // Slower, more gentle animation
+            const animationDelay = Math.random() * 8;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${leftPosition}%`;
+            bubble.style.animationDuration = `${animationDuration}s`;
+            bubble.style.animationDelay = `${animationDelay}s`;
+            bubbleContainer.appendChild(bubble);
+          }
+        }
+
+        // --- Hamburger Menu Logic ---
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (hamburgerBtn && mobileMenu) {
+          hamburgerBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+          });
+        }
+
+        // --- Slideshow Logic ---
+        const slideshowContainer = document.getElementById(
+          "slideshow-container"
+        );
+        if (slideshowContainer) {
+          const slides = slideshowContainer.querySelectorAll(".slide");
+          const prevBtn = document.getElementById("prev-btn");
+          const nextBtn = document.getElementById("next-btn");
+          let currentSlide = 0;
+          let slideInterval;
+
+          function showSlide(index) {
+            slides.forEach((slide, i) => {
+              slide.classList.add("hidden");
+              slide.style.opacity = 0;
+            });
+            slides[index].classList.remove("hidden");
+            setTimeout(() => (slides[index].style.opacity = 1), 50); // fade in
+            currentSlide = index;
+          }
+
+          function nextSlide() {
+            let newIndex = (currentSlide + 1) % slides.length;
+            showSlide(newIndex);
+          }
+
+          function prevSlide() {
+            let newIndex = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(newIndex);
+          }
+
+          function startSlideshow() {
+            slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+          }
+
+          function stopSlideshow() {
+            clearInterval(slideInterval);
+          }
+
+          if (prevBtn && nextBtn) {
+            prevBtn.addEventListener("click", () => {
+              prevSlide();
+              stopSlideshow();
+              startSlideshow();
+            });
+            nextBtn.addEventListener("click", () => {
+              nextSlide();
+              stopSlideshow();
+              startSlideshow();
+            });
+          }
+
+          startSlideshow();
+        }
+
+        // --- Modal & Form Logic ---
+        const getStartedBtnAbout = document.getElementById(
+          "get-started-btn-about"
+        );
+        const signupBtn = document.getElementById("signup-btn");
+        const appStoreBtn = document.getElementById("app-store-btn");
+        const googlePlayBtn = document.getElementById("google-play-btn");
+        const infoModal = document.getElementById("info-modal");
+        const modalPanel = document.getElementById("modal-panel");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const waitlistForm = document.getElementById("waitlist-form");
+        const waitlistContent = document.getElementById("waitlist-content");
+        const successMessage = document.getElementById("success-message");
+
+        if (infoModal && closeModalBtn && modalPanel) {
+          const openModal = (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            if (modalPanel.dataset.initialized === "false") {
+              createModalBubbles();
+              modalPanel.dataset.initialized = "true";
+            }
+            infoModal.classList.remove("hidden");
+            setTimeout(() => {
+              infoModal.classList.remove("opacity-0");
+              modalPanel.classList.remove("scale-95");
+            }, 10);
+          };
+
+          const closeModal = () => {
+            modalPanel.classList.add("scale-95");
+            infoModal.classList.add("opacity-0");
+            setTimeout(() => {
+              infoModal.classList.add("hidden");
+              // Reset form for next time
+              waitlistContent.classList.remove("hidden");
+              successMessage.classList.add("hidden");
+              if (waitlistForm) waitlistForm.reset();
+            }, 300);
+          };
+
+          // Attach event listener to all buttons that should open the modal
+          if (getStartedBtnAbout)
+            getStartedBtnAbout.addEventListener("click", openModal);
+          if (signupBtn) signupBtn.addEventListener("click", openModal);
+          if (appStoreBtn) appStoreBtn.addEventListener("click", openModal);
+          if (googlePlayBtn) googlePlayBtn.addEventListener("click", openModal);
+
+          closeModalBtn.addEventListener("click", closeModal);
+
+          infoModal.addEventListener("click", (event) => {
+            if (event.target === infoModal) {
+              closeModal();
+            }
+          });
+
+          // Handle Form Submission
+          if (waitlistForm) {
+            waitlistForm.addEventListener("submit", (e) => {
+              e.preventDefault(); // Prevent default browser submission
+
+              // On successful submission, hide the form and show the success message
+              waitlistContent.classList.add("hidden");
+              successMessage.classList.remove("hidden");
+            });
+          }
+        }
+
+        // Initialize all animations on page load
+        createPageBubbles("header-bubble-container");
+        createPageBubbles("footer-bubble-container");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BubbleBook - Welcome</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter (with bold weight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .video-background-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; }
+        #background-video { width: 100%; height: 100%; object-fit: cover; }
+        .video-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.2); z-index: -1; }
+        .page-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+        main { flex-grow: 1; }
+        header, footer { position: relative; overflow: hidden; }
+        .bubbles-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .bubble { position: absolute; bottom: -150px; background-color: rgba(255, 255, 255, 0.1); border-radius: 50%; animation: float-up 25s infinite; box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
+        .modal-bubble { position: absolute; bottom: -150px; background-color: rgba(236, 72, 153, 0.15); border-radius: 50%; animation: float-up 20s infinite; box-shadow: 0 0 8px rgba(236, 72, 153, 0.3); }
+        @keyframes float-up { 0% { transform: translateY(0); opacity: 1; } 99% { opacity: 1; } 100% { transform: translateY(-150vh); opacity: 0; } }
+        @keyframes subtle-glow { from { text-shadow: 0 0 2px rgba(96, 165, 250, 0.5), 0 0 4px rgba(192, 132, 252, 0.5), 0 0 6px rgba(244, 114, 182, 0.5); } to { text-shadow: 0 0 5px rgba(96, 165, 250, 1), 0 0 10px rgba(192, 132, 252, 1), 0 0 15px rgba(244, 114, 182, 1); } }
+        .ai-powered { display: inline-block; animation: subtle-glow 2s infinite alternate ease-in-out; }
+        @keyframes blink-cursor { from, to { opacity: 1; } 50% { opacity: 0; } }
+        .typewriter-cursor { animation: blink-cursor 0.7s step-end infinite; background: inherit; background-clip: text; -webkit-background-clip: text; color: transparent; }
+        
+        #hold-container { position: relative; height: 3rem; border-radius: 9999px; background-color: #e5e7eb; cursor: pointer; user-select: none; overflow: hidden; }
+        #hold-progress { position: absolute; left: 0; top: 0; height: 100%; width: 0%; background-color: #ec4899; }
+        #hold-text { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); color: #4b5563; font-weight: 500; transition: color 0.3s; }
+        #hold-container.verified #hold-progress { background-color: #22c55e; }
+        #hold-container.verified #hold-text { color: white; }
+    </style>
+</head>
+<body>
+
+    <div class="video-background-container">
+        <video id="background-video" autoplay loop muted playsinline src="https://assets.mixkit.co/videos/preview/mixkit-people-in-a-cafe-4215-large.mp4"></video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <div class="page-wrapper">
+        <header class="bg-pink-500/80 backdrop-blur-sm text-white p-4">
+            <div class="bubbles-container" id="header-bubble-container"></div>
+            <div class="relative z-10 max-w-7xl mx-auto">
+                <div class="flex items-center justify-between">
+                    <a href="index.html" class="flex items-baseline cursor-pointer"><span class="font-black text-4xl leading-none">B</span><span class="font-semibold text-lg">ubblebook</span></a>
+                    <nav class="hidden md:flex items-center space-x-2">
+                        <a href="about.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">About</a>
+                        <a href="chat-demo.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Demo</a>
+                        <a href="#" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Languages</a>
+                        <a href="#" id="signup-btn" class="px-3 py-2 bg-white text-pink-500 font-bold rounded-md hover:bg-gray-200 transition-colors">Sign Up</a>
+                    </nav>
+                    <button id="hamburger-btn" class="md:hidden p-2 rounded-md hover:bg-pink-600/50"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg></button>
+                </div>
+                <div id="mobile-menu" class="hidden md:hidden mt-2">
+                    <a href="about.html" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">About</a>
+                    <a href="chat-demo.html" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Demo</a>
+                    <a href="#" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Languages</a>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl w-full mx-auto p-4 sm:p-8 flex items-center justify-center flex-grow">
+            <div class="text-center bg-white/80 backdrop-blur-sm p-10 rounded-lg shadow-2xl">
+                <h1 class="text-6xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Pop In, <span id="typewriter-container"></span></h1>
+                <p class="mt-6 text-xl text-gray-800">Discover meaningful connections over coffee or conversation, <span class="ai-powered">powered by AI.</span></p>
+                <button id="get-started-btn" class="mt-8 px-8 py-3 bg-pink-500 text-white font-bold rounded-full hover:bg-pink-600 transition-transform transform hover:scale-105">Get Started</button>
+            </div>
+        </main>
+
+        <footer class="bg-pink-500/80 backdrop-blur-sm text-white py-4">
+            <div class="bubbles-container" id="footer-bubble-container"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-center md:text-left">
+                    <div class="flex items-baseline cursor-pointer justify-center md:justify-start"><span class="font-black text-3xl leading-none">B</span><span class="font-semibold text-base">ubblebook</span></div>
+                    <p class="text-pink-200 text-sm mt-2">&copy; 2025 BubbleBook. All rights reserved.</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <div class="flex items-center justify-center md:justify-end gap-2">
+                        <a href="#" id="app-store-btn" aria-label="Download on the App Store"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="h-10"></a>
+                        <a href="#" id="google-play-btn" aria-label="Get it on Google Play"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="h-14"></a>
+                    </div>
+                    <p class="text-[10px] text-pink-300 mt-2 leading-tight">Apple and the Apple logo are trademarks of Apple Inc. Google Play is a trademark of Google LLC.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div id="info-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ease-in-out">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform transition-all duration-300 ease-in-out scale-95 overflow-hidden" id="modal-panel" data-initialized="false">
+            <div class="bubbles-container" id="modal-bubble-container"></div>
+            <div class="relative z-10 text-center">
+                <button id="close-modal-btn" class="absolute -top-4 -right-4 text-gray-400 hover:text-gray-700"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                <div id="waitlist-content">
+                    <h2 class="text-3xl font-bold text-gray-800">Be the First to Pop In!</h2>
+                    <p class="mt-4 text-gray-600">Join our waitlist to get exclusive early access.</p>
+                    <form id="waitlist-form" class="mt-6 flex flex-col gap-4">
+                        <!-- Step 1: Email -->
+                        <div id="step-1">
+                             <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg></div><input id="email-input" type="email" placeholder="Enter your email" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your email"></div>
+                            <button type="button" id="next-to-step-2" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
+                        </div>
+                         <!-- Step 2: Age Verification -->
+                        <div id="step-2" class="hidden">
+                             <div class="relative"><div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"><svg class="w-5 h-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg></div><input id="dob-input" type="text" placeholder="MM/DD/YYYY" required class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your date of birth"></div>
+                            <button type="button" id="next-to-step-3" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
+                        </div>
+                        <!-- Step 3: Phone Number -->
+                        <div id="step-3" class="hidden">
+                            <div class="relative"><span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">+1</span><input id="phone-input" type="tel" placeholder="(555) 123-4567" required class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition" aria-label="Enter your phone number"></div>
+                            <button type="button" id="next-to-step-4" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600">Next</button>
+                        </div>
+                        <!-- Step 4: Verification -->
+                        <div id="step-4" class="hidden">
+                             <div id="hold-container"><div id="hold-progress"></div><span id="hold-text">Hold to Verify</span></div>
+                            <button type="submit" id="waitlist-submit-btn" class="mt-4 w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600 disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>Join the Waitlist</button>
+                        </div>
+                        <div id="error-message" class="text-red-500 text-sm h-4 mt-1"></div>
+                    </form>
+                </div>
+                <div id="success-message" class="hidden">
+                     <h2 class="text-3xl font-bold text-gray-800">🎉 Thanks!</h2>
+                     <p class="mt-4 text-gray-600">Thanks for joining the Bubble Book waitlist! We'll notify you soon.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        let db, auth;
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            signInAnonymously(auth).catch(error => console.error("Anonymous sign-in failed:", error));
+        } catch (e) { console.error("Firebase init failed.", e); }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function createBubbles(containerId, bubbleClass, count) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                for (let i = 0; i < count; i++) {
+                    const bubble = document.createElement('div');
+                    bubble.classList.add(bubbleClass);
+                    const size = Math.random() * (bubbleClass === 'bubble' ? 40 : 60) + 10;
+                    const style = {
+                        width: `${size}px`, height: `${size}px`, left: `${Math.random() * 100}%`,
+                        animationDuration: `${Math.random() * (bubbleClass === 'bubble' ? 4 : 8) + (bubbleClass === 'bubble' ? 3 : 6)}s`,
+                        animationDelay: `${Math.random() * (bubbleClass === 'bubble' ? 3 : 8)}s`,
+                    };
+                    Object.assign(bubble.style, style);
+                    container.appendChild(bubble);
+                }
+            }
+
+            const hamburgerBtn = document.getElementById('hamburger-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+            
+            const typewriterContainer = document.getElementById('typewriter-container');
+            if (typewriterContainer) {
+                const textToType = "Chat Up!";
+                let textIndex = 0, isErasing = false;
+                const loop = () => {
+                    const currentText = textToType.substring(0, textIndex);
+                    typewriterContainer.innerHTML = `${currentText}<span class="typewriter-cursor">|</span>`;
+                    if (isErasing) {
+                        if (textIndex > 0) textIndex--;
+                        else isErasing = false;
+                    } else {
+                        if (textIndex < textToType.length) textIndex++;
+                        else setTimeout(() => isErasing = true, 2000);
+                    }
+                };
+                setInterval(loop, 150);
+            }
+
+            const modalTriggers = ['get-started-btn', 'signup-btn', 'app-store-btn', 'google-play-btn'];
+            const infoModal = document.getElementById('info-modal');
+            const modalPanel = document.getElementById('modal-panel');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const waitlistForm = document.getElementById('waitlist-form');
+            const waitlistContent = document.getElementById('waitlist-content');
+            const successMessage = document.getElementById('success-message');
+            const errorMessageDiv = document.getElementById('error-message');
+            const steps = [document.getElementById('step-1'), document.getElementById('step-2'), document.getElementById('step-3'), document.getElementById('step-4')];
+            const nextBtns = [document.getElementById('next-to-step-2'), document.getElementById('next-to-step-3'), document.getElementById('next-to-step-4')];
+            const emailInput = document.getElementById('email-input');
+            const dobInput = document.getElementById('dob-input');
+            const phoneInput = document.getElementById('phone-input');
+            const holdContainer = document.getElementById('hold-container'), holdProgress = document.getElementById('hold-progress'), holdText = document.getElementById('hold-text');
+            const submitBtn = document.getElementById('waitlist-submit-btn');
+            let holdTimer, progressInterval, isVerified = false;
+            const holdDuration = 2000;
+
+            function startHold() {
+                if (isVerified) return;
+                holdProgress.style.transition = '';
+                const startTime = Date.now();
+                progressInterval = setInterval(() => {
+                    const progress = Math.min(((Date.now() - startTime) / holdDuration) * 100, 100);
+                    holdProgress.style.width = `${progress}%`;
+                    holdText.textContent = `Verifying (${Math.round(progress)}%)...`;
+                }, 50);
+                holdTimer = setTimeout(verify, holdDuration);
+            }
+            function cancelHold() {
+                if (isVerified) return;
+                clearTimeout(holdTimer);
+                clearInterval(progressInterval);
+                holdProgress.style.transition = 'width 0.3s ease-out';
+                holdProgress.style.width = '0%';
+                holdText.textContent = 'Hold to Verify';
+            }
+            function verify() {
+                clearInterval(progressInterval);
+                isVerified = true;
+                holdContainer.classList.add('verified');
+                holdText.textContent = 'Verified!';
+                submitBtn.disabled = false;
+                errorMessageDiv.textContent = '';
+            }
+            function resetCaptcha() {
+                isVerified = false;
+                cancelHold();
+                holdContainer.classList.remove('verified');
+                holdText.textContent = 'Hold to Verify';
+                submitBtn.disabled = true;
+            }
+
+            holdContainer.addEventListener('mousedown', startHold);
+            holdContainer.addEventListener('mouseup', cancelHold);
+            holdContainer.addEventListener('mouseleave', cancelHold);
+            holdContainer.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+            holdContainer.addEventListener('touchend', cancelHold);
+
+            function goToStep(stepNum) {
+                steps.forEach((step, index) => step.classList.toggle('hidden', index + 1 !== stepNum));
+            }
+            
+            function validateAge() {
+                const dobString = dobInput.value;
+                const parts = dobString.split('/');
+                if (parts.length !== 3 || parts[0].length !== 2 || parts[1].length !== 2 || parts[2].length !== 4) return false;
+                const dob = new Date(parts[2], parts[0] - 1, parts[1]);
+                if (isNaN(dob.getTime())) return false;
+                const ageDiffMs = Date.now() - dob.getTime();
+                const ageDate = new Date(ageDiffMs);
+                return Math.abs(ageDate.getUTCFullYear() - 1970) >= 18;
+            }
+
+            nextBtns[0].addEventListener('click', () => {
+                if (emailInput.checkValidity()) { errorMessageDiv.textContent = ''; goToStep(2); } 
+                else { errorMessageDiv.textContent = 'Please enter a valid email address.'; }
+            });
+
+            nextBtns[1].addEventListener('click', () => {
+                if(validateAge()){ errorMessageDiv.textContent = ''; goToStep(3); }
+                else{ errorMessageDiv.textContent = 'You must be at least 18 years old.'; }
+            });
+
+            nextBtns[2].addEventListener('click', () => {
+                if (phoneInput.value.replace(/\D/g, '').length === 10) { errorMessageDiv.textContent = ''; goToStep(4); } 
+                else { errorMessageDiv.textContent = 'Please enter a valid 10-digit US phone number.'; }
+            });
+            
+            dobInput.addEventListener('input', (e) => {
+                let input = e.target.value.replace(/\D/g, '').substring(0, 8);
+                let formatted = '';
+                if(input.length > 0) formatted = input.substring(0,2);
+                if(input.length > 2) formatted += `/${input.substring(2,4)}`;
+                if(input.length > 4) formatted += `/${input.substring(4,8)}`;
+                e.target.value = formatted;
+            });
+
+            phoneInput.addEventListener('input', (e) => {
+                let input = e.target.value.replace(/\D/g, '').substring(0, 10);
+                let formatted = input.length > 0 ? `(${input.substring(0,3)}` : '';
+                if (input.length > 3) formatted += `) ${input.substring(3,6)}`;
+                if (input.length > 6) formatted += `-${input.substring(6,10)}`;
+                e.target.value = formatted;
+            });
+            
+            if (infoModal) {
+                const openModal = (e) => {
+                    e.preventDefault();
+                    goToStep(1);
+                    resetCaptcha();
+                    if (modalPanel.dataset.initialized === 'false') {
+                        createBubbles('modal-bubble-container', 'modal-bubble', 25);
+                        modalPanel.dataset.initialized = 'true';
+                    }
+                    infoModal.classList.remove('hidden');
+                    setTimeout(() => { infoModal.classList.remove('opacity-0'); modalPanel.classList.remove('scale-95'); }, 10);
+                };
+                const closeModal = () => {
+                    modalPanel.classList.add('scale-95');
+                    infoModal.classList.add('opacity-0');
+                    setTimeout(() => {
+                        infoModal.classList.add('hidden');
+                        waitlistContent.classList.remove('hidden');
+                        successMessage.classList.add('hidden');
+                        if (waitlistForm) waitlistForm.reset();
+                        errorMessageDiv.textContent = '';
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Join the Waitlist';
+                    }, 300);
+                };
+                modalTriggers.forEach(id => document.getElementById(id)?.addEventListener('click', openModal));
+                closeModalBtn.addEventListener('click', closeModal);
+                infoModal.addEventListener('click', (e) => e.target === infoModal && closeModal());
+
+                waitlistForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if (!isVerified) { errorMessageDiv.textContent = 'Please complete verification.'; return; }
+                    const email = emailInput.value;
+                    const phone = `+1${phoneInput.value.replace(/\D/g, '')}`;
+                    const dob = dobInput.value;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Checking...';
+                    try {
+                        if (!db) throw new Error("Database not connected.");
+                        const emailQuery = query(collection(db, `artifacts/${appId}/public/data/waitlist`), where("email", "==", email));
+                        const phoneQuery = query(collection(db, `artifacts/${appId}/public/data/waitlist`), where("phone", "==", phone));
+                        const emailSnapshot = await getDocs(emailQuery);
+                        const phoneSnapshot = await getDocs(phoneQuery);
+                        if (!emailSnapshot.empty || !phoneSnapshot.empty) {
+                            errorMessageDiv.textContent = 'Sorry, this email or phone is already registered.';
+                            submitBtn.textContent = 'Join the Waitlist';
+                            resetCaptcha();
+                            submitBtn.disabled = true; // Keep it disabled after finding a duplicate
+                            return;
+                        }
+                        submitBtn.textContent = 'Joining...';
+                        await addDoc(collection(db, `artifacts/${appId}/public/data/waitlist`), {
+                            email: email, phone: phone, dob: dob, joinedAt: serverTimestamp(), earlyAdopter: true
+                        });
+                        waitlistContent.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+                    } catch (error) {
+                        errorMessageDiv.textContent = 'Could not join. Please try again.';
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Join the Waitlist';
+                        resetCaptcha();
+                    }
+                });
+            }
+            
+            createBubbles('header-bubble-container', 'bubble', 40);
+            createBubbles('footer-bubble-container', 'bubble', 40);
+        });
+    </script>
+</body>
+</html>

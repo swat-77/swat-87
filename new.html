@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Book - Connect & Chat, Powered by AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7fafc; /* Fallback background for when video isn't playing */
+            overflow-x: hidden; /* Prevent horizontal scroll due to potential video sizing */
+        }
+        /* Custom gradient for a fun, bubbly feel */
+        .bubble-gradient {
+            background: linear-gradient(135deg, #a7e9ff, #c5aaff, #ffafc5);
+        }
+        /* Subtle animation for the form button */
+        .btn-hover-effect:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .video-background {
+            position: fixed; /* Positions the video relative to the viewport */
+            top: 0;
+            left: 0;
+            width: 100vw; /* Covers full viewport width */
+            height: 100vh; /* Covers full viewport height */
+            object-fit: cover; /* Ensures the video covers the entire container, maintaining aspect ratio */
+            z-index: -2; /* Puts it far behind other content */
+        }
+        .video-overlay {
+            position: fixed; /* Positions the overlay relative to the viewport */
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.3); /* Semi-transparent dark overlay for text readability */
+            z-index: -1; /* Above the video, but still behind the main content box */
+        }
+
+        /* Styles for the typewriter effect and blinking cursor */
+        .animate-blink {
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+
+    <!-- Video Background Section (placed first in body, but visually behind due to z-index) -->
+    <div class="fixed inset-0 overflow-hidden z-0">
+        <video autoplay loop muted playsinline class="video-background">
+            <!-- IMPORTANT: To play a video from a local desktop folder:
+                 1. Place your video file (e.g., 'my-bubble-video.mp4') in the same directory as this HTML file,
+                    or in a subfolder (e.g., 'videos/my-bubble-video.mp4').
+                 2. Change the src below to your local path, e.g., './my-bubble-video.mp4' or './videos/my-bubble-video.mp4'.
+                 Direct absolute paths like 'C:/Users/YourUser/Desktop/video.mp4' generally DO NOT work in browsers due to security restrictions. -->
+            <source src="./Cute.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay"></div>
+    </div>
+
+    <!-- Main Container (z-index ensures it's above the video and overlay) -->
+    <div class="relative max-w-4xl w-full bg-white shadow-xl rounded-3xl p-8 sm:p-10 lg:p-12 text-center transform transition-all duration-300 ease-in-out z-10">
+
+        <!-- Logo Section - Top Left -->
+        <div class="absolute top-8 left-8">
+            <a href="#" class="flex items-center space-x-2 text-gray-800 hover:text-gray-900 transition-colors duration-200">
+                <!-- SVG Icon: Chat Bubble + Open Book -->
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 11.5C21 16.7467 16.7467 21 11.5 21C9.66468 21 7.97344 20.4578 6.57521 19.5083L3 21L4.49174 17.4248C3.54222 16.0266 3 14.3353 3 12.5C3 7.25332 7.25332 3 12.5 3C17.7467 3 22 7.25332 22 12.5L21 11.5Z" fill="#a7e9ff"/>
+                    <path d="M18.7071 9.70711C18.3166 9.31658 17.6834 9.31658 17.2929 9.70711L13 14V17.5C13 18.0523 13.4477 18.5 14 18.5H17.5C18.0523 18.5 18.5 18.0523 18.5 17.5V14L18.7071 9.70711Z" fill="#ffafc5"/>
+                    <path d="M12.5 3C17.7467 3 22 7.25332 22 12.5C22 17.7467 17.7467 22 12.5 22C7.25332 22 3 17.7467 3 12.5C3 7.25332 7.25332 3 12.5 3ZM12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4Z" fill="#a7e9ff"/>
+                    <path d="M15 13H10V10H15C15.5523 10 16 10.4477 16 11V12C16 12.5523 15.5523 13 15 13Z" fill="#c5aaff"/>
+                    <path d="M12.5 3C17.7467 3 22 7.25332 22 12.5C22 17.7467 17.7467 22 12.5 22C7.25332 22 3 17.7467 3 12.5C3 7.25332 7.25332 3 12.5 3ZM12.5 4C7.80558 4 4 7.80558 4 12.5C4 17.1944 7.80558 21 12.5 21C17.1944 21 21 17.1944 21 12.5C21 7.80558 17.1944 4 12.5 4Z" fill="url(#paint0_linear_1_2)"/>
+                    <defs>
+                        <linearGradient id="paint0_linear_1_2" x1="12.5" y1="3" x2="12.5" y2="22" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#a7e9ff"/>
+                            <stop offset="0.5" stop-color="#c5aaff"/>
+                            <stop offset="1" stop-color="#ffafc5"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="text-2xl font-bold">Bubble Book</span>
+            </a>
+        </div>
+
+        <!-- Header Section -->
+        <header class="mb-10 mt-12">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-4 bubble-gradient bg-clip-text text-transparent">
+                <span id="headline-part1">Pop In,</span> <span id="typewriter-text"></span><span id="cursor" class="ml-1 animate-blink">|</span>
+            </h1>
+            <p id="tagline" class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto">
+                Discover meaningful connections over coffee or conversation, powered by AI.
+            </p>
+        </header>
+
+        <!-- App Description Section -->
+        <section class="mb-12">
+            <h2 id="section-title-1" class="text-3xl sm:text-4xl font-semibold text-gray-800 mb-6">Your Next Great Connection is Just a Tap Away</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+                <!-- Feature 1 -->
+                <div class="bg-blue-50 p-6 rounded-2xl shadow-md flex items-start space-x-4">
+                    <span class="text-4xl" role="img" aria-label="Sparkles">✨</span>
+                    <div>
+                        <h3 id="feature-title-1" class="text-xl font-semibold text-gray-900 mb-2">Smart Matching, Real Conversations</h3>
+                        <p id="feature-desc-1" class="text-gray-700">Bubble Book uses advanced AI to connect you with interesting people nearby. Whether you're looking for a deep dive into startup strategy or just a friendly chat, we find your perfect match.</p>
+                    </div>
+                </div>
+                <!-- Feature 2 -->
+                <div class="bg-pink-50 p-6 rounded-2xl shadow-md flex items-start space-x-4">
+                    <span class="text-4xl" role="img" aria-label="Coffee Cup">☕</span>
+                    <div>
+                        <h3 id="feature-title-2" class="text-xl font-semibold text-gray-900 mb-2">Casual & Convenient Meetups</h3>
+                        <p id="feature-desc-2" class="text-gray-700">Forget awkward networking events. Our app makes it easy to schedule casual coffee breaks or quick chats at local spots, fitting perfectly into your busy schedule.</p>
+                    </div>
+                </div>
+                <!-- Feature 3 -->
+                <div class="bg-purple-50 p-6 rounded-2xl shadow-md flex items-start space-x-4">
+                    <span class="text-4xl" role="img" aria-label="Speech Bubble">💬</span>
+                    <div>
+                        <h3 id="feature-title-3" class="text-xl font-semibold text-gray-900 mb-2">For Founders, Creatives & Curious Minds</h3>
+                        <p id="feature-desc-3" class="text-gray-700">Connect with fellow entrepreneurs, explore new ideas with creatives, or simply enjoy a laid-back conversation with someone who shares your interests. Expand your bubble!</p>
+                    </div>
+                </div>
+                <!-- Feature 4 -->
+                <div class="bg-green-50 p-6 rounded-2xl shadow-md flex items-start space-x-4">
+                    <span class="text-4xl" role="img" aria-label="Location Pin">📍</span>
+                    <div>
+                        <h3 id="feature-title-4" class="text-xl font-semibold text-gray-900 mb-2">Local & On-Demand</h3>
+                        <p id="feature-desc-4" class="text-gray-700">Find connections right in your neighborhood. Bubble Book focuses on proximity, making spontaneous and convenient meetups a reality.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Waitlist Form Section -->
+        <section class="bg-gray-100 p-8 rounded-2xl shadow-inner-lg mt-10">
+            <h2 id="waitlist-title" class="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">Be the First to Pop In!</h2>
+            <p id="waitlist-description" class="text-lg text-gray-700 mb-8 max-w-xl mx-auto">
+                Join our waitlist to get exclusive early access and start making meaningful connections.
+            </p>
+            <form id="waitlistForm" class="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                <input
+                    type="email"
+                    id="emailInput"
+                    placeholder="Enter your email"
+                    required
+                    class="flex-grow p-4 rounded-xl border-2 border-purple-200 focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all duration-200 ease-in-out text-lg text-gray-800 placeholder-gray-400 outline-none"
+                >
+                <button
+                    type="submit"
+                    id="join-waitlist-btn"
+                    class="btn-hover-effect bg-bubble-gradient hover:bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all duration-300 ease-in-out text-lg sm:w-auto w-full"
+                >
+                    Join the Waitlist
+                </button>
+            </form>
+            <p id="successMessage" class="mt-6 text-green-600 font-semibold text-lg hidden">
+                🎉 Thanks for joining the Bubble Book waitlist! We'll notify you soon.
+            </p>
+        </section>
+
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="w-full max-w-4xl mt-12 mb-4 px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between z-10">
+        <!-- Language Selector and Sign In -->
+        <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+            <div class="relative">
+                <select id="language-select" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-xl leading-tight focus:outline-none focus:bg-white focus:border-gray-500 shadow">
+                    <option value="en">English (United States)</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+            <button id="sign-in-btn" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl shadow transition-colors duration-200">
+                Sign In
+            </button>
+        </div>
+
+        <!-- App Store Badges -->
+        <div class="flex flex-col items-center sm:items-end">
+            <div class="flex space-x-3">
+                <a href="#" class="inline-block">
+                    <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="h-10">
+                </a>
+                <a href="#" class="inline-block">
+                    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="h-12">
+                </a>
+            </div>
+            <p id="trademark-text" class="text-xs text-gray-500 mt-2 text-right">
+                Apple and the Apple logo are trademarks of Apple Inc.<br>
+                Google Play is a trademark of Google LLC.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Language content object
+        const translations = {
+            en: {
+                headlinePart1: "Pop In,",
+                typewriterText: "Chat Up!",
+                tagline: "Discover meaningful connections over coffee or conversation, powered by AI.",
+                sectionTitle1: "Your Next Great Connection is Just a Tap Away",
+                featureTitle1: "Smart Matching, Real Conversations",
+                featureDesc1: "Bubble Book uses advanced AI to connect you with interesting people nearby. Whether you're looking for a deep dive into startup strategy or just a friendly chat, we find your perfect match.",
+                featureTitle2: "Casual & Convenient Meetups",
+                featureDesc2: "Forget awkward networking events. Our app makes it easy to schedule casual coffee breaks or quick chats at local spots, fitting perfectly into your busy schedule.",
+                featureTitle3: "For Founders, Creatives & Curious Minds",
+                featureDesc3: "Connect with fellow entrepreneurs, explore new ideas with creatives, or simply enjoy a laid-back conversation with someone who shares your interests. Expand your bubble!",
+                featureTitle4: "Local & On-Demand",
+                featureDesc4: "Find connections right in your neighborhood. Bubble Book focuses on proximity, making spontaneous and convenient meetups a reality.",
+                waitlistTitle: "Be the First to Pop In!",
+                waitlistDescription: "Join our waitlist to get exclusive early access and start making meaningful connections.",
+                emailPlaceholder: "Enter your email",
+                joinWaitlistBtn: "Join the Waitlist",
+                successMessage: "🎉 Thanks for joining the Bubble Book waitlist! We'll notify you soon.",
+                signInBtn: "Sign In",
+                trademarkText: "Apple and the Apple logo are trademarks of Apple Inc.\\nGoogle Play is a trademark of Google LLC.",
+            },
+            es: {
+                headlinePart1: "¡Entra,",
+                typewriterText: "Chatea!",
+                tagline: "Descubre conexiones significativas con café o conversación, impulsado por IA.",
+                sectionTitle1: "Tu Próxima Gran Conexión Está a un Toque",
+                featureTitle1: "Emparejamiento Inteligente, Conversaciones Reales",
+                featureDesc1: "Bubble Book utiliza IA avanzada para conectarte con personas interesantes cercanas. Ya sea que busques una inmersión profunda en la estrategia de startups o simplemente una charla amistosa, encontramos tu pareja perfecta.",
+                featureTitle2: "Encuentros Casuales y Convenientes",
+                featureDesc2: "Olvídate de los incómodos eventos de networking. Nuestra aplicación facilita la programación de pausas para el café casuales o chats rápidos en lugares locales, adaptándose perfectamente a tu horario ocupado.",
+                featureTitle3: "Para Fundadores, Creativos y Mentes Curiosas",
+                featureDesc3: "Conéctate con otros emprendedores, explora nuevas ideas con creativos o simplemente disfruta de una conversación relajada con alguien que comparta tus intereses. ¡Expande tu burbuja!",
+                featureTitle4: "Local y a Demanda",
+                featureDesc4: "Encuentra conexiones justo en tu vecindario. Bubble Book se enfoca en la proximidad, haciendo realidad los encuentros espontáneos y convenientes.",
+                waitlistTitle: "¡Sé el Primero en Entrar!",
+                waitlistDescription: "Únete a nuestra lista de espera para obtener acceso anticipado exclusivo y comenzar a hacer conexiones significativas.",
+                emailPlaceholder: "Introduce tu correo electrónico",
+                joinWaitlistBtn: "Unirse a la Lista de Espera",
+                successMessage: "🎉 ¡Gracias por unirte a la lista de espera de Bubble Book! Te notificaremos pronto.",
+                signInBtn: "Iniciar Sesión",
+                trademarkText: "Apple y el logotipo de Apple son marcas comerciales de Apple Inc.\\nGoogle Play es una marca comercial de Google LLC.",
+            },
+            fr: {
+                headlinePart1: "Entrez,",
+                typewriterText: "Discutez!",
+                tagline: "Découvrez des connexions significatives autour d'un café ou d'une conversation, optimisé par l'IA.",
+                sectionTitle1: "Votre Prochaine Grande Connexion est à Portée de Main",
+                featureTitle1: "Correspondance Intelligente, Conversations Réelles",
+                featureDesc1: "Bubble Book utilise une IA avancée pour vous connecter avec des personnes intéressantes à proximité. Que vous recherchiez une plongée approfondie dans la stratégie de startup ou simplement une discussion amicale, nous trouvons votre correspondance parfaite.",
+                featureTitle2: "Rencontres Décontractées et Pratiques",
+                featureDesc2: "Oubliez les événements de réseautage maladroits. Notre application facilite la planification de pauses café décontractées ou de discussions rapides dans des lieux locaux, s'adaptant parfaitement à votre emploi du temps chargé.",
+                featureTitle3: "Pour les Fondateurs, les Créatifs et les Esprits Curieux",
+                featureDesc3: "Connectez-vous avec d'autres entrepreneurs, explorez de nouvelles idées avec des créatifs, ou profitez simplement d'une conversation détendue avec quelqu'un qui partage vos intérêts. Élargissez votre bulle !",
+                featureTitle4: "Local et sur Demande",
+                featureDesc4: "Trouvez des connexions juste dans votre quartier. Bubble Book se concentre sur la proximité, rendant les rencontres spontanées et pratiques une réalité.",
+                waitlistTitle: "Soyez le Premier à Entrer !",
+                waitlistDescription: "Rejoignez notre liste d'attente pour obtenir un accès anticipé exclusif et commencer à établir des connexions significatives.",
+                emailPlaceholder: "Entrez votre e-mail",
+                joinWaitlistBtn: "Rejoindre la Liste d'Attente",
+                successMessage: "🎉 Merci d'avoir rejoint la liste d'attente de Bubble Book ! Nous vous informerons bientôt.",
+                signInBtn: "Connexion",
+                trademarkText: "Apple et le logo Apple sont des marques commerciales d'Apple Inc.\\nGoogle Play est une marque commerciale de Google LLC.",
+            }
+        };
+
+        // Function to update the page content based on selected language
+        function updateContent(lang) {
+            const currentText = translations[lang];
+
+            document.getElementById('headline-part1').textContent = currentText.headlinePart1;
+            // The typewriter text is handled separately by its animation
+            document.getElementById('tagline').textContent = currentText.tagline;
+            document.getElementById('section-title-1').textContent = currentText.sectionTitle1;
+
+            document.getElementById('feature-title-1').textContent = currentText.featureTitle1;
+            document.getElementById('feature-desc-1').textContent = currentText.featureDesc1;
+            document.getElementById('feature-title-2').textContent = currentText.featureTitle2;
+            document.getElementById('feature-desc-2').textContent = currentText.featureDesc2;
+            document.getElementById('feature-title-3').textContent = currentText.featureTitle3;
+            document.getElementById('feature-desc-3').textContent = currentText.featureDesc3;
+            document.getElementById('feature-title-4').textContent = currentText.featureTitle4;
+            document.getElementById('feature-desc-4').textContent = currentText.featureDesc4;
+
+            document.getElementById('waitlist-title').textContent = currentText.waitlistTitle;
+            document.getElementById('waitlist-description').textContent = currentText.waitlistDescription;
+            document.getElementById('emailInput').placeholder = currentText.emailPlaceholder;
+            document.getElementById('join-waitlist-btn').textContent = currentText.joinWaitlistBtn;
+            document.getElementById('successMessage').textContent = currentText.successMessage;
+
+            document.getElementById('sign-in-btn').textContent = currentText.signInBtn;
+            document.getElementById('trademark-text').innerHTML = currentText.trademarkText.replace(/\\n/g, '<br>'); // Handle line breaks
+            
+            // Restart typewriter effect for the new language
+            restartTypewriter(currentText.typewriterText);
+        }
+
+        let currentTypewriterTimeout;
+        let currentResetTimeout;
+
+        function restartTypewriter(newText) {
+            clearTimeout(currentTypewriterTimeout);
+            clearTimeout(currentResetTimeout);
+            const typewriterTextElement = document.getElementById('typewriter-text');
+            const cursorElement = document.getElementById('cursor');
+            typewriterTextElement.textContent = ''; // Clear existing text
+            let charIndex = 0;
+
+            function typeWriterLoop() {
+                if (charIndex < newText.length) {
+                    typewriterTextElement.textContent += newText.charAt(charIndex);
+                    charIndex++;
+                    currentTypewriterTimeout = setTimeout(typeWriterLoop, 150);
+                } else {
+                    cursorElement.style.display = 'inline';
+                    currentResetTimeout = setTimeout(() => {
+                        typewriterTextElement.textContent = '';
+                        charIndex = 0;
+                        typeWriterLoop();
+                    }, 2000);
+                }
+            }
+            typeWriterLoop();
+        }
+
+        // Event listener for language selection
+        document.addEventListener('DOMContentLoaded', () => {
+            const languageSelect = document.getElementById('language-select');
+            languageSelect.addEventListener('change', (event) => {
+                updateContent(event.target.value);
+            });
+
+            // Initial content load (default to English)
+            updateContent('en');
+
+            // Form submission feedback (existing code)
+            document.getElementById('waitlistForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const emailInput = document.getElementById('emailInput');
+                const successMessage = document.getElementById('successMessage');
+
+                if (emailInput.value) {
+                    successMessage.classList.remove('hidden');
+                    emailInput.value = '';
+                    emailInput.disabled = true;
+                    event.target.querySelector('button').disabled = true;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

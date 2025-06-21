@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bubble Book - Connect & Chat, Powered by AI</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter (with bold weight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Applying the Inter font to the whole page */
+      /* main page with splash screen*/
+      body {
+        font-family: "Inter", sans-serif;
+        overflow: hidden; /* Hide scrollbars that might appear due to bubbles */
+      }
+
+      /* Container for the floating bubbles */
+      .bubbles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1; /* Ensure bubbles are behind the main content */
+      }
+
+      /* Styling for individual bubbles */
+      .bubble {
+        position: absolute;
+        bottom: -150px; /* Start below the screen */
+        background-color: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        animation: float-up 20s infinite;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.3),
+          0 0 20px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Keyframe animation for the floating effect */
+      @keyframes float-up {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        99% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(
+            -120vh
+          ); /* Move bubbles far above the viewport */
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-pink-500">
+    <!-- Bubble Animation Container -->
+    <div class="bubbles-container" id="bubble-container"></div>
+
+    <!-- Main Content Container -->
+    <!-- This div takes up the full screen and centers its content both vertically and horizontally. -->
+    <div
+      class="relative flex flex-col items-center justify-center h-screen z-10 p-4"
+    >
+      <!-- "BubbleBook" Text Container -->
+      <!-- This container uses flexbox to align the large "B" and the smaller "ubblebook" on their baseline. -->
+      <div class="flex items-baseline text-white">
+        <!-- The "B" remains large and bold, with its size adjusting for different screen widths. -->
+        <span
+          class="font-black text-8xl sm:text-9xl lg:text-[12rem] leading-none"
+          >B</span
+        >
+        <!-- The "ubblebook" part is smaller. The negative margin has been removed to create space. -->
+        <span class="font-semibold text-2xl sm:text-3xl lg:text-5xl"
+          >ubblebook</span
+        >
+      </div>
+
+      <!-- Loading Text -->
+      <!-- The font size of the loading text is also made responsive. -->
+      <p class="mt-4 sm:mt-8 text-xl sm:text-2xl font-semibold text-white">
+        Made in Silicon Valley
+      </p>
+      <p class="mt-4 sm:mt-8 text-xl sm:text-2xl font-semibold text-white">
+        Powered by Gen AI and LLM Model
+      </p>
+    </div>
+
+    <div className="w-full h-20 bg-bubblePink"></div>
+
+    <script>
+      // JavaScript to create and animate bubbles dynamically
+
+      const bubbleContainer = document.getElementById("bubble-container");
+      // Increased the number of bubbles for a more intense, brief effect.
+      const numberOfBubbles = 75;
+
+      for (let i = 0; i < numberOfBubbles; i++) {
+        const bubble = document.createElement("div");
+        bubble.classList.add("bubble");
+
+        // Randomize properties for each bubble
+        const size = Math.random() * 80 + 20; // Size between 20px and 100px
+        const leftPosition = Math.random() * 100; // Position between 0% and 100% of the width
+        // Animation duration is now very short for a fast effect (0.5 to 1.5 seconds)
+        const animationDuration = Math.random() * 1 + 0.5;
+        // Delay is very short so bubbles appear almost instantly.
+        const animationDelay = Math.random() * 0.5;
+
+        // Apply the randomized styles
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${leftPosition}%`;
+        bubble.style.animationDuration = `${animationDuration}s`;
+        bubble.style.animationDelay = `${animationDelay}s`;
+
+        // Add the bubble to the container
+        bubbleContainer.appendChild(bubble);
+      }
+    </script>
+  </body>
+  <script>
+    // This function will run after a set amount of time
+    setTimeout(function () {
+      // This line changes the page's URL to 'index.html'
+      window.location.href = "mainpage3.html";
+    }, 1000); // 2000 milliseconds = 2 seconds //1000 milliseconds = 1 second
+  </script>
+</html>

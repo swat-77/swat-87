@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with BubbleBook AI</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter (with bold weight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .page-wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex-grow: 1;
+        }
+        header, footer {
+            position: relative;
+            overflow: hidden;
+        }
+        .bubbles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+        }
+        .bubble {
+            position: absolute;
+            bottom: -150px; 
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float-up 25s infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+        @keyframes float-up {
+            0% { transform: translateY(0); opacity: 1; }
+            99% { opacity: 1; }
+            100% { transform: translateY(-150vh); opacity: 0; }
+        }
+
+        /* AI Typing Indicator Animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .dot {
+            animation: bounce 1.2s infinite;
+        }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Page Wrapper for Content -->
+    <div class="page-wrapper">
+        <!-- Header Section -->
+        <header class="bg-pink-500/80 backdrop-blur-sm text-white p-4 sticky top-0 z-40">
+            <div class="bubbles-container" id="header-bubble-container"></div>
+            <div class="relative z-10 max-w-7xl mx-auto">
+                <div class="flex items-center justify-between">
+                    <!-- Logo -->
+                    <a href="index.html" class="flex items-baseline cursor-pointer">
+                        <span class="font-black text-4xl leading-none">B</span>
+                        <span class="font-semibold text-lg">ubblebook</span>
+                    </a>
+                    <!-- Desktop Navigation -->
+                    <nav class="hidden md:flex items-center space-x-2">
+                        <a href="about.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">About</a>
+                        <a href="Demo.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Demo</a>
+                        <a href="#" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Languages</a>
+                        <a href="#" id="signup-btn" class="px-3 py-2 bg-white text-pink-500 font-bold rounded-md hover:bg-gray-200 transition-colors">Sign Up</a>
+                    </nav>
+                    <!-- Hamburger Button -->
+                    <button id="hamburger-btn" class="md:hidden p-2 rounded-md hover:bg-pink-600/50">
+                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden mt-2">
+                    <a href="about.html" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">About</a>
+                    <a href="#" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Download</a>
+                    <a href="#" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Languages</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content for Chat Page -->
+        <main class="w-full flex items-center justify-center p-4">
+            <div class="w-full max-w-2xl h-[70vh] flex flex-col bg-white rounded-2xl shadow-2xl">
+                <!-- Chat Header -->
+                <div class="p-4 border-b border-gray-200">
+                    <h1 class="text-xl font-bold text-gray-800 text-center">BubbleBook Next GEN AI</h1>
+                </div>
+
+                <!-- Chat Messages -->
+                <div id="chat-window" class="flex-grow p-6 space-y-4 overflow-y-auto">
+                    <!-- This div will contain the entire conversation -->
+                    <div id="full-conversation-container">
+                        <!-- Initial user message will stay -->
+                        <div class="flex justify-end">
+                            <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
+                                <p>I want to go to morning walk tomorrow find a friend for me.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="p-4 border-t border-gray-200 bg-gray-50">
+                    <div class="flex items-center">
+                        <input type="text" placeholder="Your message..." class="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-pink-400" disabled>
+                        <button class="ml-3 p-2 bg-pink-500 text-white rounded-full hover:bg-pink-600" disabled>
+                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Section -->
+        <footer class="bg-pink-500/80 backdrop-blur-sm text-white py-4">
+            <div class="bubbles-container" id="footer-bubble-container"></div>
+            <div class="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="text-center md:text-left">
+                    <div class="flex items-baseline cursor-pointer justify-center md:justify-start">
+                        <span class="font-black text-3xl leading-none">B</span>
+                        <span class="font-semibold text-base">ubblebook</span>
+                    </div>
+                    <p class="text-pink-200 text-sm mt-2">&copy; 2025 BubbleBook. All rights reserved.</p>
+                </div>
+                <div class="text-center md:text-right">
+                    <div class="flex items-center justify-center md:justify-end gap-2">
+                        <a href="#" id="app-store-btn" aria-label="Download on the App Store">
+                            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store" class="h-10">
+                        </a>
+                        <a href="#" id="google-play-btn" aria-label="Get it on Google Play">
+                            <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" class="h-14">
+                        </a>
+                    </div>
+                    <p class="text-[10px] text-pink-300 mt-2 leading-tight">
+                        Apple and the Apple logo are trademarks of Apple Inc. Google Play is a trademark of Google LLC.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- The same Pop-up Modal HTML would go here -->
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        /**
+         * Reusable function to create animated bubbles for header/footer.
+         */
+        function createPageBubbles(containerId) {
+            const bubbleContainer = document.getElementById(containerId);
+            if (!bubbleContainer) return;
+            const numberOfBubbles = 40; 
+            for (let i = 0; i < numberOfBubbles; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 40 + 10;
+                const leftPosition = Math.random() * 100;
+                const animationDuration = Math.random() * 3 + 1;
+                const animationDelay = Math.random() * 2;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${leftPosition}%`;
+                bubble.style.animationDuration = `${animationDuration}s`;
+                bubble.style.animationDelay = `${animationDelay}s`;
+                bubbleContainer.appendChild(bubble);
+            }
+        }
+        
+        // --- Hamburger Menu Logic ---
+        const hamburgerBtn = document.getElementById('hamburger-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (hamburgerBtn && mobileMenu) {
+            hamburgerBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // --- Chat Demo Logic ---
+        const conversationContainer = document.getElementById('full-conversation-container');
+        const chatWindow = document.getElementById('chat-window');
+
+        const templates = {
+            typing: `
+                <div class="flex justify-start items-center space-x-1">
+                    <div class="bg-gray-200 p-3 rounded-lg flex space-x-1">
+                        <div class="dot w-2 h-2 bg-gray-500 rounded-full"></div>
+                        <div class="dot w-2 h-2 bg-gray-500 rounded-full"></div>
+                        <div class="dot w-2 h-2 bg-gray-500 rounded-full"></div>
+                    </div>
+                </div>`,
+            aiResponse1: `
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                        <p>An American man named Steven Walker could be a great match for you. He is going tomorrow at 7:30 am for a morning walk starting from Lake Chabot Road. Meet him up at 1201 Lake Chabot Road.</p>
+                    </div>
+                </div>`,
+            aiResponse2: `
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                         <p>Do you want to ask Steven as your morning walk buddy?</p>
+                    </div>
+                </div>`,
+            userActions: `
+                <div class="flex justify-center gap-4 pt-2">
+                    <button class="px-4 py-2 bg-pink-500 text-white font-semibold rounded-full shadow cursor-not-allowed">Yes, send request</button>
+                    <button class="px-4 py-2 bg-gray-300 text-gray-800 font-semibold rounded-full shadow cursor-not-allowed">No, show others</button>
+                </div>`,
+            userRequestSent: `
+                <div class="flex justify-end">
+                    <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
+                        <p>Yes, please send the request!</p>
+                    </div>
+                </div>`,
+            aiConfirmation: `
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                        <p>I've sent your request to Steven. I'll let you know when he responds.</p>
+                    </div>
+                </div>`,
+            aiSuccess: `
+                 <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                        <p>🎉 Great news! Steven has accepted your request. See you tomorrow!</p>
+                    </div>
+                </div>`
+        };
+
+        function appendMessage(template) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'opacity-0 transition-opacity duration-500 ease-in-out';
+            wrapper.innerHTML = template;
+            conversationContainer.appendChild(wrapper);
+            setTimeout(() => wrapper.classList.remove('opacity-0'), 50);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+            return wrapper;
+        }
+
+        async function runChatCycle() {
+            // Clear previous dynamic messages
+            conversationContainer.innerHTML = `
+                <div class="flex justify-end">
+                    <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
+                        <p>I want to go to morning walk tomorrow find a friend for me.</p>
+                    </div>
+                </div>`;
+
+            const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+            let typingIndicator = appendMessage(templates.typing);
+            await sleep(2000);
+            typingIndicator.remove();
+            
+            appendMessage(templates.aiResponse1);
+            await sleep(3000);
+
+            appendMessage(templates.aiResponse2);
+            await sleep(2000);
+
+            const actions = appendMessage(templates.userActions);
+            await sleep(2000); // Pause to show buttons
+
+            // --- Auto-run the "Yes" path ---
+            actions.remove();
+            appendMessage(templates.userRequestSent);
+            await sleep(1000);
+            
+            typingIndicator = appendMessage(templates.typing);
+            await sleep(2000);
+            typingIndicator.remove();
+
+            appendMessage(templates.aiConfirmation);
+            await sleep(2000);
+
+            typingIndicator = appendMessage(templates.typing);
+            await sleep(2000);
+            typingIndicator.remove();
+
+            appendMessage(templates.aiSuccess);
+        }
+        
+        // Run the chat cycle on page load and then loop with a pause
+        const cycleInterval = 28000; // Total conversation time (~18s) + 10s pause
+        runChatCycle();
+        setInterval(runChatCycle, cycleInterval);
+
+        // Initialize animations
+        createPageBubbles('header-bubble-container');
+        createPageBubbles('footer-bubble-container');
+    });
+    </script>
+</body>
+</html>

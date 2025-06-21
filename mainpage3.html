@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BubbleBook - Welcome</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter (with bold weight) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Applying the Inter font and setting up for a sticky footer */
+      body {
+        font-family: "Inter", sans-serif;
+      }
+
+      /* Container for the background video */
+      .video-background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -2; /* Place it behind everything */
+      }
+      #background-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure the video covers the screen without distortion */
+      }
+
+      /* Dark overlay for better text readability */
+      .video-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.2); /* A subtle dark tint */
+        z-index: -1;
+      }
+
+      .page-wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      main {
+        flex-grow: 1;
+      }
+
+      header,
+      footer {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .bubbles-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+
+      /* Bubbles for header and footer (white) */
+      .bubble {
+        position: absolute;
+        bottom: -150px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: float-up 25s infinite;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      /* Bubbles for modal (pink) */
+      .modal-bubble {
+        position: absolute;
+        bottom: -150px;
+        background-color: rgba(236, 72, 153, 0.15); /* Light pink color */
+        border-radius: 50%;
+        animation: float-up 20s infinite;
+        box-shadow: 0 0 8px rgba(236, 72, 153, 0.3);
+      }
+
+      @keyframes float-up {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        99% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-150vh);
+          opacity: 0;
+        }
+      }
+
+      @keyframes subtle-glow {
+        from {
+          text-shadow: 0 0 2px rgba(96, 165, 250, 0.5),
+            0 0 4px rgba(192, 132, 252, 0.5), 0 0 6px rgba(244, 114, 182, 0.5);
+        }
+        to {
+          text-shadow: 0 0 5px rgba(96, 165, 250, 1),
+            0 0 10px rgba(192, 132, 252, 1), 0 0 15px rgba(244, 114, 182, 1);
+        }
+      }
+      .ai-powered {
+        display: inline-block;
+        animation: subtle-glow 2s infinite alternate ease-in-out;
+      }
+
+      @keyframes blink-cursor {
+        from,
+        to {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      .typewriter-cursor {
+        animation: blink-cursor 0.7s step-end infinite;
+        background: inherit;
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background Video and Overlay -->
+    <div class="video-background-container">
+      <video
+        id="background-video"
+        autoplay
+        loop
+        muted
+        playsinline
+        src="./Cute.mp4"
+      ></video>
+    </div>
+    <div class="video-overlay"></div>
+
+    <!-- Page Wrapper for Content -->
+    <div class="page-wrapper">
+      <!-- Header Section -->
+      <header class="bg-pink-500/80 backdrop-blur-sm text-white p-4">
+        <div class="bubbles-container" id="header-bubble-container"></div>
+        <div class="relative z-10 max-w-7xl mx-auto">
+          <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-baseline cursor-pointer">
+              <span class="font-black text-4xl leading-none">B</span>
+              <span class="font-semibold text-lg">ubblebook</span>
+            </div>
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-2">
+              <a
+                href=".\about.html"
+                class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors"
+                >About</a
+              >
+              <a
+                href=".\Demo.html"
+                class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors"
+                >Demo</a
+              >
+              <a
+                href="#"
+                class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors"
+                >Languages</a
+              >
+              <a
+                href="#"
+                id="signup-btn"
+                class="px-3 py-2 bg-white text-pink-500 font-bold rounded-md hover:bg-gray-200 transition-colors"
+                >Sign Up</a
+              >
+            </nav>
+            <!-- Hamburger Button -->
+            <button
+              id="hamburger-btn"
+              class="md:hidden p-2 rounded-md hover:bg-pink-600/50"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"
+                ></path>
+              </svg>
+            </button>
+          </div>
+          <!-- Mobile Menu -->
+          <div id="mobile-menu" class="hidden md:hidden mt-2">
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md"
+              >About</a
+            >
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md"
+              >Download</a
+            >
+            <a
+              href="#"
+              class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md"
+              >Languages</a
+            >
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main
+        class="max-w-7xl w-full mx-auto p-4 sm:p-8 flex items-center justify-center"
+      >
+        <div
+          class="text-center bg-white/80 backdrop-blur-sm p-10 rounded-lg shadow-2xl"
+        >
+          <h1
+            class="text-6xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent"
+          >
+            Pop In, <span id="typewriter-container"></span>
+          </h1>
+          <p class="mt-6 text-xl text-gray-800">
+            Discover meaningful connections over coffee or conversation,
+            <span class="ai-powered">powered by AI.</span>
+          </p>
+          <button
+            id="get-started-btn"
+            class="mt-8 px-8 py-3 bg-pink-500 text-white font-bold rounded-full hover:bg-pink-600 transition-transform transform hover:scale-105"
+          >
+            Get Started
+          </button>
+        </div>
+      </main>
+
+      <!-- Footer Section -->
+      <footer class="bg-pink-500/80 backdrop-blur-sm text-white py-4">
+        <div class="bubbles-container" id="footer-bubble-container"></div>
+        <div
+          class="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <!-- Left Side: Logo and Copyright -->
+          <div class="text-center md:text-left">
+            <div
+              class="flex items-baseline cursor-pointer justify-center md:justify-start"
+            >
+              <span class="font-black text-3xl leading-none">B</span>
+              <span class="font-semibold text-base">ubblebook</span>
+            </div>
+            <p class="text-pink-200 text-sm mt-2">
+              &copy; 2025 BubbleBook. All rights reserved.
+            </p>
+          </div>
+          <!-- Right Side: App Store Badges -->
+          <div class="flex items-center gap-2">
+            <a
+              href="#"
+              id="app-store-btn"
+              aria-label="Download on the App Store"
+            >
+              <img
+                src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                alt="Download on the App Store"
+                class="h-10"
+              />
+            </a>
+            <a href="#" id="google-play-btn" aria-label="Get it on Google Play">
+              <img
+                src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"
+                alt="Get it on Google Play"
+                class="h-14"
+              />
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Pop-up Modal HTML -->
+    <div
+      id="info-modal"
+      class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300 ease-in-out"
+    >
+      <div
+        class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative transform transition-all duration-300 ease-in-out scale-95 overflow-hidden"
+        id="modal-panel"
+        data-initialized="false"
+      >
+        <!-- Modal Bubble Container -->
+        <div class="bubbles-container" id="modal-bubble-container"></div>
+
+        <!-- Modal Content (wrapped for z-index) -->
+        <div class="relative z-10 text-center">
+          <!-- Close Button -->
+          <button
+            id="close-modal-btn"
+            class="absolute -top-4 -right-4 text-gray-400 hover:text-gray-700"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+
+          <div id="waitlist-content">
+            <!-- Headline -->
+            <h2 class="text-3xl font-bold text-gray-800">
+              Be the First to Pop In!
+            </h2>
+
+            <!-- Explanation -->
+            <p class="mt-4 text-gray-600">
+              Join our waitlist to get exclusive early access and start making
+              meaningful connections.
+            </p>
+
+            <!-- Waitlist Form -->
+            <form id="waitlist-form" class="mt-6 flex flex-col gap-4">
+              <input
+                id="email-input"
+                type="email"
+                placeholder="Enter your email"
+                required
+                class="w-full px-4 py-3 border border-purple-200 rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none transition"
+                aria-label="Enter your email"
+              />
+
+              <label
+                class="flex items-center justify-center text-sm text-gray-600 cursor-pointer"
+              >
+                <input
+                  id="robot-check"
+                  type="checkbox"
+                  class="h-4 w-4 rounded border-gray-300 text-pink-500 focus:ring-pink-400"
+                  required
+                />
+                <span class="ml-2">I'm not a robot</span>
+              </label>
+
+              <button
+                type="submit"
+                class="w-full px-10 py-3 bg-pink-500 text-white font-bold rounded-lg hover:bg-pink-600 transition-all transform hover:scale-105"
+              >
+                Join the Waitlist
+              </button>
+            </form>
+          </div>
+
+          <!-- Success Message (Initially Hidden) -->
+          <div id="success-message" class="hidden">
+            <h2 class="text-3xl font-bold text-gray-800">🎉 Thanks!</h2>
+            <p class="mt-4 text-gray-600">
+              Thanks for joining the Bubble Book waitlist! We'll notify you
+              soon.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        /**
+         * Reusable function to create animated bubbles for header/footer.
+         */
+        function createPageBubbles(containerId) {
+          const bubbleContainer = document.getElementById(containerId);
+          if (!bubbleContainer) return;
+          const numberOfBubbles = 40;
+          for (let i = 0; i < numberOfBubbles; i++) {
+            const bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+            const size = Math.random() * 40 + 10;
+            const leftPosition = Math.random() * 100;
+            const animationDuration = Math.random() * 3 + 1;
+            const animationDelay = Math.random() * 2;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${leftPosition}%`;
+            bubble.style.animationDuration = `${animationDuration}s`;
+            bubble.style.animationDelay = `${animationDelay}s`;
+            bubbleContainer.appendChild(bubble);
+          }
+        }
+
+        /**
+         * Function to create animated bubbles specifically for the modal.
+         */
+        function createModalBubbles() {
+          const bubbleContainer = document.getElementById(
+            "modal-bubble-container"
+          );
+          if (!bubbleContainer) return;
+          const numberOfBubbles = 25;
+          for (let i = 0; i < numberOfBubbles; i++) {
+            const bubble = document.createElement("div");
+            bubble.classList.add("modal-bubble"); // Use the pink bubble style
+            const size = Math.random() * 60 + 20; // Slightly larger bubbles in modal
+            const leftPosition = Math.random() * 100;
+            const animationDuration = Math.random() * 8 + 6; // Slower, more gentle animation
+            const animationDelay = Math.random() * 8;
+            bubble.style.width = `${size}px`;
+            bubble.style.height = `${size}px`;
+            bubble.style.left = `${leftPosition}%`;
+            bubble.style.animationDuration = `${animationDuration}s`;
+            bubble.style.animationDelay = `${animationDelay}s`;
+            bubbleContainer.appendChild(bubble);
+          }
+        }
+
+        /**
+         * Creates a looping typewriter effect.
+         */
+        function typewriter() {
+          const container = document.getElementById("typewriter-container");
+          if (!container) return;
+          const textToType = "Chat Up!";
+          let textIndex = 0;
+          let isErasing = false;
+          function loop() {
+            const currentText = textToType.substring(0, textIndex);
+            container.innerHTML = `${currentText}<span class="typewriter-cursor">|</span>`;
+            if (isErasing) {
+              if (textIndex > 0) {
+                textIndex--;
+                setTimeout(loop, 100);
+              } else {
+                isErasing = false;
+                setTimeout(loop, 500);
+              }
+            } else {
+              if (textIndex < textToType.length) {
+                textIndex++;
+                setTimeout(loop, 150);
+              } else {
+                isErasing = true;
+                setTimeout(loop, 2000);
+              }
+            }
+          }
+          loop();
+        }
+
+        // --- Hamburger Menu Logic ---
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        if (hamburgerBtn && mobileMenu) {
+          hamburgerBtn.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+          });
+        }
+
+        // --- Modal & Form Logic ---
+        const getStartedBtn = document.getElementById("get-started-btn");
+        const signupBtn = document.getElementById("signup-btn");
+        const appStoreBtn = document.getElementById("app-store-btn");
+        const googlePlayBtn = document.getElementById("google-play-btn");
+        const infoModal = document.getElementById("info-modal");
+        const modalPanel = document.getElementById("modal-panel");
+        const closeModalBtn = document.getElementById("close-modal-btn");
+        const waitlistForm = document.getElementById("waitlist-form");
+        const waitlistContent = document.getElementById("waitlist-content");
+        const successMessage = document.getElementById("success-message");
+
+        if (infoModal && closeModalBtn && modalPanel) {
+          const openModal = (e) => {
+            e.preventDefault(); // Prevent default link behavior
+            if (modalPanel.dataset.initialized === "false") {
+              createModalBubbles();
+              modalPanel.dataset.initialized = "true";
+            }
+            infoModal.classList.remove("hidden");
+            setTimeout(() => {
+              infoModal.classList.remove("opacity-0");
+              modalPanel.classList.remove("scale-95");
+            }, 10);
+          };
+
+          const closeModal = () => {
+            modalPanel.classList.add("scale-95");
+            infoModal.classList.add("opacity-0");
+            setTimeout(() => {
+              infoModal.classList.add("hidden");
+              // Reset form for next time
+              waitlistContent.classList.remove("hidden");
+              successMessage.classList.add("hidden");
+              if (waitlistForm) waitlistForm.reset();
+            }, 300);
+          };
+
+          // Attach event listener to all buttons that should open the modal
+          if (getStartedBtn) getStartedBtn.addEventListener("click", openModal);
+          if (signupBtn) signupBtn.addEventListener("click", openModal);
+          if (appStoreBtn) appStoreBtn.addEventListener("click", openModal);
+          if (googlePlayBtn) googlePlayBtn.addEventListener("click", openModal);
+
+          closeModalBtn.addEventListener("click", closeModal);
+
+          infoModal.addEventListener("click", (event) => {
+            if (event.target === infoModal) {
+              closeModal();
+            }
+          });
+
+          // Handle Form Submission
+          if (waitlistForm) {
+            waitlistForm.addEventListener("submit", (e) => {
+              e.preventDefault(); // Prevent default browser submission
+
+              // On successful submission, hide the form and show the success message
+              waitlistContent.classList.add("hidden");
+              successMessage.classList.remove("hidden");
+            });
+          }
+        }
+
+        // Initialize all animations on page load
+        createPageBubbles("header-bubble-container");
+        createPageBubbles("footer-bubble-container");
+        typewriter();
+      });
+    </script>
+  </body>
+</html>
