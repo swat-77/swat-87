@@ -192,7 +192,6 @@
 
         // General templates for messages and actions
         const templates = {
-            // Reverted aiWelcome to its previous state (without specific credit)
             aiWelcome: (message) => `
                 <div class="flex justify-start">
                     <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
@@ -236,7 +235,6 @@
 
         // Define individual conversation scripts as named functions
         async function morningWalkConversation() {
-            // Reverted this message to be just the prompt, without the credit
             appendMessage(templates.aiWelcome("Find a friend or Network connection Easily using just the text prompt."));
             await sleep(2000);
             appendMessage(templates.userMessage("I want to go to morning walk tomorrow find a friend for me."));
@@ -356,8 +354,8 @@
         const conversationSequence = [
             plumberJobConversation,
             coffeeBuddyConversation,
-            morningWalkConversation, // Added back to the sequence
-            networkingEventConversation // Added back to the sequence
+            morningWalkConversation,
+            networkingEventConversation
         ];
 
         let currentSequenceIndex = 0; // Track which conversation in the sequence is playing
