@@ -192,6 +192,7 @@
 
         // General templates for messages and actions
         const templates = {
+            // Reverted aiWelcome to its previous state (without specific credit)
             aiWelcome: (message) => `
                 <div class="flex justify-start">
                     <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
@@ -235,7 +236,8 @@
 
         // Define individual conversation scripts as named functions
         async function morningWalkConversation() {
-            appendMessage(templates.aiWelcome("Welcome to BubbleBook! Find a friend or Network connection Easily using just the text prompt."));
+            // Reverted this message to be just the prompt, without the credit
+            appendMessage(templates.aiWelcome("Find a friend or Network connection Easily using just the text prompt."));
             await sleep(2000);
             appendMessage(templates.userMessage("I want to go to morning walk tomorrow find a friend for me."));
             await sleep(1500);
@@ -267,7 +269,7 @@
         }
 
         async function coffeeBuddyConversation() {
-            appendMessage(templates.aiWelcome("Welcome to BubbleBook! Let's find your next great connection."));
+            appendMessage(templates.aiWelcome("Let's find your next great connection."));
             await sleep(2000);
             appendMessage(templates.userMessage("I'm looking for a coffee buddy to chat about new tech trends."));
             await sleep(1500);
@@ -295,7 +297,7 @@
         }
 
         async function plumberJobConversation() {
-            appendMessage(templates.aiWelcome("Welcome to BubbleBook! How can I help you today?"));
+            appendMessage(templates.aiWelcome("How can I help you today?"));
             await sleep(2000);
             appendMessage(templates.userMessage("I'm a plumber looking for local job opportunities."));
             await sleep(1500);
@@ -323,7 +325,7 @@
         }
 
         async function networkingEventConversation() {
-            appendMessage(templates.aiWelcome("Welcome to BubbleBook! What are you looking for?"));
+            appendMessage(templates.aiWelcome("What are you looking for?"));
             await sleep(2000);
             appendMessage(templates.userMessage("Are there any networking events for entrepreneurs next week?"));
             await sleep(1500);
@@ -353,8 +355,9 @@
         // Define the sequence of conversations to play
         const conversationSequence = [
             plumberJobConversation,
-            coffeeBuddyConversation
-            // The loop in playNextConversation will repeat these two
+            coffeeBuddyConversation,
+            morningWalkConversation, // Added back to the sequence
+            networkingEventConversation // Added back to the sequence
         ];
 
         let currentSequenceIndex = 0; // Track which conversation in the sequence is playing
