@@ -32,11 +32,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; 
+            z-index: 1;
         }
         .bubble {
             position: absolute;
-            bottom: -150px; 
+            bottom: -150px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             animation: float-up 25s infinite;
@@ -76,19 +76,19 @@
                     </a>
                     <!-- Desktop Navigation -->
                     <nav class="hidden md:flex items-center space-x-2">
-                        <a href="About.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">About</a>
+                        <a href="about.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">About</a>
                         <a href="Demo.html" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Demo</a>
                         <a href="#" class="px-3 py-2 hover:bg-pink-600/50 rounded-md transition-colors">Languages</a>
                         <a href="#" id="signup-btn" class="px-3 py-2 bg-white text-pink-500 font-bold rounded-md hover:bg-gray-200 transition-colors">Sign Up</a>
                     </nav>
                     <!-- Hamburger Button -->
                     <button id="hamburger-btn" class="md:hidden p-2 rounded-md hover:bg-pink-600/50">
-                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
                 <!-- Mobile Menu -->
                 <div id="mobile-menu" class="hidden md:hidden mt-2">
-                    <a href="About.html" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">About</a>
+                    <a href="about.html" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">About</a>
                     <a href="#" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Download</a>
                     <a href="#" class="block py-2 px-4 text-sm hover:bg-pink-600/50 rounded-md">Languages</a>
                 </div>
@@ -100,19 +100,14 @@
             <div class="w-full max-w-2xl h-[70vh] flex flex-col bg-white rounded-2xl shadow-2xl">
                 <!-- Chat Header -->
                 <div class="p-4 border-b border-gray-200">
-                    <h1 class="text-xl font-bold text-gray-800 text-center">BubbleBook Next GEN AI</h1>
+                    <h1 class="text-xl font-bold text-gray-800 text-center">Welcome to BubbleBook Next GEN AI</h1>
                 </div>
 
                 <!-- Chat Messages -->
                 <div id="chat-window" class="flex-grow p-6 space-y-4 overflow-y-auto">
                     <!-- This div will contain the entire conversation -->
                     <div id="full-conversation-container">
-                        <!-- Initial user message will stay -->
-                        <div class="flex justify-end">
-                            <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
-                                <p>I want to go to morning walk tomorrow find a friend for me.</p>
-                            </div>
-                        </div>
+                        <!-- Content will be dynamically loaded by JavaScript -->
                     </div>
                 </div>
 
@@ -156,8 +151,6 @@
         </footer>
     </div>
 
-    <!-- The same Pop-up Modal HTML would go here -->
-
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         /**
@@ -166,7 +159,7 @@
         function createPageBubbles(containerId) {
             const bubbleContainer = document.getElementById(containerId);
             if (!bubbleContainer) return;
-            const numberOfBubbles = 40; 
+            const numberOfBubbles = 40;
             for (let i = 0; i < numberOfBubbles; i++) {
                 const bubble = document.createElement('div');
                 bubble.classList.add('bubble');
@@ -182,7 +175,7 @@
                 bubbleContainer.appendChild(bubble);
             }
         }
-        
+
         // --- Hamburger Menu Logic ---
         const hamburgerBtn = document.getElementById('hamburger-btn');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -192,12 +185,25 @@
                 mobileMenu.classList.toggle('hidden');
             });
         }
-        
+
         // --- Chat Demo Logic ---
         const conversationContainer = document.getElementById('full-conversation-container');
         const chatWindow = document.getElementById('chat-window');
 
+        // General templates for messages and actions
         const templates = {
+            aiWelcome: (message) => `
+                <div class="flex justify-start">
+                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
+                        <p>${message}</p>
+                    </div>
+                </div>`,
+            userMessage: (message) => `
+                <div class="flex justify-end">
+                    <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
+                        <p>${message}</p>
+                    </div>
+                </div>`,
             typing: `
                 <div class="flex justify-start items-center space-x-1">
                     <div class="bg-gray-200 p-3 rounded-lg flex space-x-1">
@@ -206,102 +212,176 @@
                         <div class="dot w-2 h-2 bg-gray-500 rounded-full"></div>
                     </div>
                 </div>`,
-            aiResponse1: `
-                <div class="flex justify-start">
-                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
-                        <p>An American man named Steven Walker could be a great match for you. He is going tomorrow at 7:30 am for a morning walk starting from Lake Chabot Road. Meet him up at 1201 Lake Chabot Road.</p>
-                    </div>
-                </div>`,
-            aiResponse2: `
-                <div class="flex justify-start">
-                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
-                         <p>Do you want to ask Steven as your morning walk buddy?</p>
-                    </div>
-                </div>`,
-            userActions: `
-                <div class="flex justify-center gap-4 pt-2">
-                    <button class="px-4 py-2 bg-pink-500 text-white font-semibold rounded-full shadow cursor-not-allowed">Yes, send request</button>
-                    <button class="px-4 py-2 bg-gray-300 text-gray-800 font-semibold rounded-full shadow cursor-not-allowed">No, show others</button>
-                </div>`,
-            userRequestSent: `
-                <div class="flex justify-end">
-                    <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
-                        <p>Yes, please send the request!</p>
-                    </div>
-                </div>`,
-            aiConfirmation: `
-                <div class="flex justify-start">
-                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
-                        <p>I've sent your request to Steven. I'll let you know when he responds.</p>
-                    </div>
-                </div>`,
-            aiSuccess: `
-                 <div class="flex justify-start">
-                    <div class="bg-gray-200 text-gray-800 p-3 rounded-lg max-w-xs shadow">
-                        <p>🎉 Great news! Steven has accepted your request. See you tomorrow!</p>
-                    </div>
+            userActions: (action1Text, action2Text) => `
+                <div class="flex flex-col sm:flex-row justify-center gap-2 pt-2">
+                    <button class="px-4 py-2 bg-pink-500 text-white font-semibold rounded-full shadow cursor-not-allowed">${action1Text}</button>
+                    <button class="px-4 py-2 bg-gray-300 text-gray-800 font-semibold rounded-full shadow cursor-not-allowed">${action2Text}</button>
                 </div>`
         };
 
-        function appendMessage(template) {
+        // Function to append a message to the chat window
+        function appendMessage(templateHTML) {
             const wrapper = document.createElement('div');
             wrapper.className = 'opacity-0 transition-opacity duration-500 ease-in-out';
-            wrapper.innerHTML = template;
+            wrapper.innerHTML = templateHTML;
             conversationContainer.appendChild(wrapper);
-            setTimeout(() => wrapper.classList.remove('opacity-0'), 50);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return wrapper;
+            setTimeout(() => wrapper.classList.remove('opacity-0'), 50); // Small delay for fade-in
+            chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to bottom
+            return wrapper; // Return element for potential removal
         }
 
-        async function runChatCycle() {
-            // Clear previous dynamic messages
-            conversationContainer.innerHTML = `
-                <div class="flex justify-end">
-                    <div class="bg-pink-500 text-white p-3 rounded-lg max-w-xs shadow">
-                        <p>I want to go to morning walk tomorrow find a friend for me.</p>
-                    </div>
-                </div>`;
+        // Helper for pauses
+        const sleep = ms => new Promise(res => setTimeout(res, ms));
 
-            const sleep = ms => new Promise(res => setTimeout(res, ms));
-
-            let typingIndicator = appendMessage(templates.typing);
+        // Define individual conversation scripts as named functions
+        async function morningWalkConversation() {
+            appendMessage(templates.aiWelcome("Welcome to BubbleBook! Find a friend or Network connection Easily using just the text prompt."));
             await sleep(2000);
-            typingIndicator.remove();
-            
-            appendMessage(templates.aiResponse1);
-            await sleep(3000);
+            appendMessage(templates.userMessage("I want to go to morning walk tomorrow find a friend for me."));
+            await sleep(1500);
 
-            appendMessage(templates.aiResponse2);
+            let typing = appendMessage(templates.typing);
             await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Steven Walker, 7:30 am, Lake Chabot Road. Good match."));
+            await sleep(1500);
+            appendMessage(templates.aiWelcome("Ask Steven to join?"));
+            await sleep(1500);
 
-            const actions = appendMessage(templates.userActions);
-            await sleep(2000); // Pause to show buttons
-
-            // --- Auto-run the "Yes" path ---
+            const actions = appendMessage(templates.userActions("Yes, send request", "No, show others"));
+            await sleep(2500); // Show buttons for 2.5s
             actions.remove();
-            appendMessage(templates.userRequestSent);
+            appendMessage(templates.userMessage("Yes, please send the request!"));
             await sleep(1000);
-            
-            typingIndicator = appendMessage(templates.typing);
-            await sleep(2000);
-            typingIndicator.remove();
 
-            appendMessage(templates.aiConfirmation);
+            typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Request sent to Steven. Will notify when he responds."));
             await sleep(2000);
 
-            typingIndicator = appendMessage(templates.typing);
+            typing = appendMessage(templates.typing);
             await sleep(2000);
-            typingIndicator.remove();
-
-            appendMessage(templates.aiSuccess);
+            typing.remove();
+            appendMessage(templates.aiWelcome("🎉 Great news! Steven has accepted your request. See you tomorrow!"));
         }
-        
-        // Run the chat cycle on page load and then loop with a pause
-        const cycleInterval = 28000; // Total conversation time (~18s) + 10s pause
-        runChatCycle();
-        setInterval(runChatCycle, cycleInterval);
 
-        // Initialize animations
+        async function coffeeBuddyConversation() {
+            appendMessage(templates.aiWelcome("Welcome to BubbleBook! Let's find your next great connection."));
+            await sleep(2000);
+            appendMessage(templates.userMessage("I'm looking for a coffee buddy to chat about new tech trends."));
+            await sleep(1500);
+
+            let typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Sarah Chen (Software Engineer) is interested in AI and blockchain. Available Thursday afternoon."));
+            await sleep(1500);
+            appendMessage(templates.aiWelcome("Would you like to connect with Sarah?"));
+            await sleep(1500);
+
+            const actions = appendMessage(templates.userActions("Yes, connect me", "Show others"));
+            await sleep(2500);
+            actions.remove();
+            appendMessage(templates.userMessage("Yes, connect me with Sarah."));
+            await sleep(1000);
+
+            typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Connecting you with Sarah. She'll get a notification."));
+            await sleep(2000);
+            appendMessage(templates.aiWelcome("You're connected! Chat in the app to set up your coffee."));
+        }
+
+        async function plumberJobConversation() {
+            appendMessage(templates.aiWelcome("Welcome to BubbleBook! How can I help you today?"));
+            await sleep(2000);
+            appendMessage(templates.userMessage("I'm a plumber looking for local job opportunities."));
+            await sleep(1500);
+
+            let typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Found 'Plumbing Fix-It Inc.' needing a skilled plumber for a full-time role. Located 5 miles from you."));
+            await sleep(1500);
+            appendMessage(templates.aiWelcome("Send your profile to Plumbing Fix-It Inc.?"));
+            await sleep(1500);
+
+            const actions = appendMessage(templates.userActions("Yes, send profile", "No, look for others"));
+            await sleep(2500);
+            actions.remove();
+            appendMessage(templates.userMessage("Yes, send my profile."));
+            await sleep(1000);
+
+            typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Profile sent! They will reach out if interested."));
+            await sleep(2000);
+            appendMessage(templates.aiWelcome("Your profile was viewed! Plumbing Fix-It Inc. is interested. Expect a call soon!"));
+        }
+
+        async function networkingEventConversation() {
+            appendMessage(templates.aiWelcome("Welcome to BubbleBook! What are you looking for?"));
+            await sleep(2000);
+            appendMessage(templates.userMessage("Are there any networking events for entrepreneurs next week?"));
+            await sleep(1500);
+
+            let typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("Yes, 'Startup Summit 2025' on Tuesday at the Innovation Hub downtown. Focus: funding and growth."));
+            await sleep(1500);
+            appendMessage(templates.aiWelcome("Want more details or register?"));
+            await sleep(1500);
+
+            const actions = appendMessage(templates.userActions("More details", "Register now"));
+            await sleep(2500);
+            actions.remove();
+            appendMessage(templates.userMessage("Give me more details."));
+            await sleep(1000);
+
+            typing = appendMessage(templates.typing);
+            await sleep(2000);
+            typing.remove();
+            appendMessage(templates.aiWelcome("The summit features keynote speakers on venture capital and a pitch competition. Tickets are $50."));
+            await sleep(2000);
+            appendMessage(templates.aiWelcome("Link to register sent to your email!"));
+        }
+
+        // Define the sequence of conversations to play
+        const conversationSequence = [
+            plumberJobConversation,
+            coffeeBuddyConversation
+            // The loop in playNextConversation will repeat these two
+        ];
+
+        let currentSequenceIndex = 0; // Track which conversation in the sequence is playing
+
+        // Function to play the current conversation script in the defined sequence
+        async function playNextConversationInSequence() {
+            // Clear the conversation window for the new conversation
+            conversationContainer.innerHTML = '';
+            await sleep(1000); // Small pause before starting new convo
+
+            // Play the current conversation from the sequence
+            await conversationSequence[currentSequenceIndex]();
+
+            // Move to the next conversation in the sequence, looping if at the end
+            currentSequenceIndex = (currentSequenceIndex + 1) % conversationSequence.length;
+
+            // Set a different delay before starting the next conversation
+            const delayBetweenConversations = Math.random() * 3000 + 3000; // 3 to 6 seconds
+            setTimeout(playNextConversationInSequence, delayBetweenConversations);
+        }
+
+        // Run chat demo on page load
+        setTimeout(() => {
+            playNextConversationInSequence();
+        }, 500); // Initial delay before the first conversation starts
+
+        // Initialize bubbles
         createPageBubbles('header-bubble-container');
         createPageBubbles('footer-bubble-container');
     });
